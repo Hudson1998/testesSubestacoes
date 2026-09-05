@@ -67,3 +67,13 @@
 @media (max-width: 900px) {
   .hero__grid { grid-template-columns: 1fr; gap: 34px; }
 }
+
+@media (max-width: 560px) {
+  .hero { padding: 36px 0 44px; }
+  .hero__title { margin: 16px 0 16px; }
+  .hero__lead { font-size: 15.5px; }
+  .hero__cta { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 24px; }
+  .hero__cta .btn { width: 100%; }
+  .livecard { padding: 18px 16px 14px; }
+  .livecard__val { font-size: 17px; }
+}

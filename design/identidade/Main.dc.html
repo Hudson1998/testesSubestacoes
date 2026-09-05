@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #16171a;
+      color: #e9e6e0;
+      font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    }
+    a { color: #f5a300; }
+    a:hover { color: #ffc24d; }
+
+    .display { font-family: "Space Grotesk", system-ui, sans-serif; }
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8b9096;
+    }
+
+    .wrap {
+      padding: 52px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 38px;
+    }
+
+    /* --- ícone: raio no bloco (tratamento A) --- */
+    .tile {
+      position: relative;
+      display: grid;
+      place-items: center;
+      background: #1b1d21;
+      border: 2px solid #f5a300;
+      border-radius: 4px;
+    }
+    .tile::before {
+      content: "";
+      position: absolute;
+      left: 9px;
+      top: 9px;
+      width: 12px;
+      height: 12px;
+      border-left: 3px solid #f5a300;
+      border-top: 3px solid #f5a300;
+    }
+    .tile svg { display: block; }
+    .bolt { fill: #f5a300; }
+
+    /* --- lockup --- */
+    .lockup { display: flex; align-items: center; gap: 22px; }
+    .word { font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: #f2efe9; }
+    .word .amber { color: #f5a300; }
+
+    .divider { height: 1px; background: #2b2e33; }
+
+    .row3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .cell {
+      border: 1px solid #26282d;
+      border-radius: 4px;
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      min-height: 196px;
+    }
+    .cell .tag {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b7075;
+    }
+    .cell.light { background: #f4f3ef; }
+    .cell.light .word { color: #1b1d21; }
+    .cell.light .word .amber { color: #1b1d21; }
+
+    .kicker {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #8b9096;
+    }
+
+    .caption { color: #6b7075; font-size: 11.5px; letter-spacing: 0.03em; }
+  </style>
+</helmet>
+
+<div class="wrap">
+  <div class="eyebrow">Identidade · Marca principal</div>
+
+  <div class="lockup">
+    <span class="tile" style="width: 78px; height: 78px;">
+      <svg width="40" height="40" viewBox="0 0 24 24">
+        <path class="bolt" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" />
+      </svg>
+    </span>
+    <span class="word display" style="font-size: 47px;">Espaço <span class="amber">Téc</span></span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="row3">
+    <div class="cell">
+      <span class="tag">Empilhada</span>
+      <span class="tile" style="width: 58px; height: 58px;">
+        <svg width="30" height="30" viewBox="0 0 24 24">
+          <path class="bolt" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" />
+        </svg>
+      </span>
+      <span class="word display" style="font-size: 23px;">Espaço <span class="amber">Téc</span></span>
+      <span class="kicker">Ensaios elétricos</span>
+    </div>
+
+    <div class="cell">
+      <span class="tag">Só ícone</span>
+      <span class="tile" style="width: 86px; height: 86px;">
+        <svg width="44" height="44" viewBox="0 0 24 24">
+          <path class="bolt" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" />
+        </svg>
+      </span>
+    </div>
+
+    <div class="cell light">
+      <span class="tag">Sobre fundo claro</span>
+      <span class="lockup" style="gap: 15px;">
+        <span class="tile" style="width: 54px; height: 54px;">
+          <svg width="27" height="27" viewBox="0 0 24 24">
+            <path class="bolt" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" />
+          </svg>
+        </span>
+        <span class="word display" style="font-size: 25px;">Espaço <span class="amber">Téc</span></span>
+      </span>
+    </div>
+  </div>
+
+  <div class="caption">Space Grotesk 700 · raio âmbar #f5a300 sobre grafite #16171a · bloco com marca de canto (mesma linguagem do site)</div>
+</div>
+</x-dc>
+</body>
+</html>

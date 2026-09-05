@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #16171a;
+      color: #e9e6e0;
+      font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    }
+    a { color: #f5a300; }
+    a:hover { color: #ffc24d; }
+
+    .display { font-family: "Space Grotesk", system-ui, sans-serif; }
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8b9096;
+    }
+
+    .wrap {
+      padding: 52px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .opt {
+      border: 1px solid #26282d;
+      border-radius: 4px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .opt-head {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #e9e6e0;
+      text-align: center;
+    }
+    .opt-desc {
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: #9aa0a6;
+      text-align: center;
+    }
+    .opt-desc b { color: #f5a300; font-weight: 500; }
+
+    .markbox { height: 128px; display: grid; place-items: center; }
+
+    /* tratamento A — raio no bloco */
+    .tA {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      display: grid;
+      place-items: center;
+      background: #1b1d21;
+      border: 2px solid #f5a300;
+      border-radius: 5px;
+    }
+    .tA::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      width: 16px;
+      height: 16px;
+      border-left: 3px solid #f5a300;
+      border-top: 3px solid #f5a300;
+    }
+
+    /* tratamento B — raio monolinha no círculo */
+    .tB {
+      width: 120px;
+      height: 120px;
+      display: grid;
+      place-items: center;
+      border: 1.6px solid #f5a300;
+      border-radius: 50%;
+    }
+
+    /* tratamento C — raio vazado no bloco cheio */
+    .tC {
+      width: 120px;
+      height: 120px;
+      display: grid;
+      place-items: center;
+      background: #f5a300;
+      border-radius: 5px;
+    }
+
+    .bolt-fill { fill: #f5a300; }
+    .bolt-knock { fill: #16171a; }
+    .bolt-line { fill: none; stroke: #f5a300; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+
+    .mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 4px;
+      border-top: 1px solid #26282d;
+      width: 100%;
+      justify-content: center;
+    }
+    .mini-l { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #6b7075; }
+    .m16 { width: 16px; height: 16px; display: grid; place-items: center; border-radius: 2px; }
+    .m16.a { background: #1b1d21; border: 1px solid #f5a300; }
+    .m16.b { border: 1px solid #f5a300; border-radius: 50%; }
+    .m16.c { background: #f5a300; }
+  </style>
+</helmet>
+
+<div class="wrap">
+  <div class="eyebrow">Marca · Tratamentos do raio</div>
+
+  <div class="grid3">
+    <div class="opt">
+      <div class="markbox">
+        <span class="tA">
+          <svg width="58" height="58" viewBox="0 0 24 24">
+            <path class="bolt-fill" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" />
+          </svg>
+        </span>
+      </div>
+      <div class="opt-head display">Tratamento A<br />Raio no bloco</div>
+      <div class="opt-desc">Bloco grafite com borda âmbar e marca de canto. Mesma linguagem dos cantos e "ticks" do site. <b>Logo principal.</b></div>
+      <div class="mini">
+        <span class="m16 a">
+          <svg width="10" height="10" viewBox="0 0 24 24"><path class="bolt-fill" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+        </span>
+        <span class="mini-l">16 px</span>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="markbox">
+        <span class="tC">
+          <svg width="62" height="62" viewBox="0 0 24 24">
+            <path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" />
+          </svg>
+        </span>
+      </div>
+      <div class="opt-head display">Tratamento C<br />Raio vazado</div>
+      <div class="opt-desc">Bloco âmbar cheio com o raio recortado. Alto contraste, continua legível bem pequeno. <b>Recomendado para o favicon.</b></div>
+      <div class="mini">
+        <span class="m16 c">
+          <svg width="11" height="11" viewBox="0 0 24 24"><path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+        </span>
+        <span class="mini-l">16 px</span>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="markbox">
+        <span class="tB">
+          <svg width="54" height="54" viewBox="0 0 24 24">
+            <path class="bolt-line" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" />
+          </svg>
+        </span>
+      </div>
+      <div class="opt-head display">Tratamento B<br />Raio monolinha</div>
+      <div class="opt-desc">Contorno em círculo, ar de instrumento de medição. Mais leve; perde definição em tamanhos muito pequenos. <b>Alternativa.</b></div>
+      <div class="mini">
+        <span class="m16 b">
+          <svg width="10" height="10" viewBox="0 0 24 24"><path class="bolt-line" style="stroke-width: 2.4;" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+        </span>
+        <span class="mini-l">16 px</span>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

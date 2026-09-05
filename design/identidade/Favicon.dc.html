@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #16171a;
+      color: #e9e6e0;
+      font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    }
+    a { color: #f5a300; }
+    a:hover { color: #ffc24d; }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8b9096;
+    }
+
+    .wrap {
+      padding: 52px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+    }
+
+    /* raio vazado (tratamento C) */
+    .fav {
+      display: grid;
+      place-items: center;
+      background: #f5a300;
+      border-radius: 4px;
+      flex: none;
+    }
+    .bolt-knock { fill: #16171a; }
+
+    .sizes { display: flex; align-items: flex-end; gap: 34px; }
+    .size { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .size .lbl { font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #6b7075; }
+
+    /* mockups de aba */
+    .tabs { display: flex; flex-direction: column; gap: 16px; max-width: 520px; }
+    .chrome {
+      border-radius: 8px 8px 4px 4px;
+      padding: 10px 10px 0;
+      display: flex;
+    }
+    .chrome.dark { background: #202124; }
+    .chrome.light { background: #dee1e6; }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 8px 8px 0 0;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-size: 12.5px;
+      max-width: 340px;
+    }
+    .chrome.dark .tab { background: #35363a; color: #e3e3e3; }
+    .chrome.light .tab { background: #fff; color: #202124; }
+
+    .tab .title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tab .close { color: #9aa0a6; font-size: 13px; line-height: 1; }
+
+    .caption { color: #6b7075; font-size: 11.5px; letter-spacing: 0.03em; }
+  </style>
+</helmet>
+
+<div class="wrap">
+  <div class="eyebrow">Favicon · Ícone da aba do navegador</div>
+
+  <div class="sizes">
+    <div class="size">
+      <span class="fav" style="width: 64px; height: 64px; border-radius: 6px;">
+        <svg width="34" height="34" viewBox="0 0 24 24"><path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+      </span>
+      <span class="lbl">64 px</span>
+    </div>
+    <div class="size">
+      <span class="fav" style="width: 48px; height: 48px; border-radius: 5px;">
+        <svg width="26" height="26" viewBox="0 0 24 24"><path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+      </span>
+      <span class="lbl">48 px</span>
+    </div>
+    <div class="size">
+      <span class="fav" style="width: 32px; height: 32px; border-radius: 4px;">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+      </span>
+      <span class="lbl">32 px</span>
+    </div>
+    <div class="size">
+      <span class="fav" style="width: 16px; height: 16px; border-radius: 3px;">
+        <svg width="10" height="10" viewBox="0 0 24 24"><path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+      </span>
+      <span class="lbl">16 px</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="chrome dark">
+      <div class="tab">
+        <span class="fav" style="width: 16px; height: 16px; border-radius: 3px;">
+          <svg width="10" height="10" viewBox="0 0 24 24"><path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+        </span>
+        <span class="title">Espaço Téc — Laudos de subestação em PDF</span>
+        <span class="close">×</span>
+      </div>
+    </div>
+    <div class="chrome light">
+      <div class="tab">
+        <span class="fav" style="width: 16px; height: 16px; border-radius: 3px;">
+          <svg width="10" height="10" viewBox="0 0 24 24"><path class="bolt-knock" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" /></svg>
+        </span>
+        <span class="title">Espaço Téc — Laudos de subestação em PDF</span>
+        <span class="close">×</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">Tratamento C (raio vazado) · fundo do bloco âmbar, raio na cor do grafite · exportar .ico 16/32/48 + versão .svg</div>
+</div>
+</x-dc>
+</body>
+</html>

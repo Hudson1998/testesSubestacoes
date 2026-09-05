@@ -171,3 +171,17 @@
   .lf__body { padding: 22px; }
   .lf__foot { padding: 16px 22px; }
 }
+
+@media (max-width: 560px) {
+  .lf__lead { margin-bottom: 22px; }
+  .lf__step { justify-content: center; padding: 14px 6px; gap: 0; }
+  .lf__step-n { font-size: 13px; }
+  .lf__body { padding: 18px 16px; }
+  .lf__foot { padding: 14px 16px; }
+  .lf__meas-row { gap: 8px; }
+  .lf__meas-input input { flex: 1; }
+  .lf__sum-row { gap: 12px; }
+  .lf__result { padding: 26px 16px; }
+  .lf__result-actions { flex-direction: column; align-self: stretch; gap: 10px; }
+  .lf__result-actions .btn { width: 100%; }
+}

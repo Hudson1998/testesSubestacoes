@@ -1,15 +1,29 @@
 <header class="nav">
   <div class="wrap nav__in">
-    <a class="brand" href="#topo">
-      TENSÃO<span class="brand__plus">+</span>
-      <small>Ensaios</small>
+    <a class="brand" href="#topo" aria-label="Espaço Téc — início" (click)="fecharMenu()">
+      <svg class="brand__mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="4" fill="#1b1d21" stroke="#f5a300" stroke-width="2" />
+        <path d="M6 6h5M6 6v5" stroke="#f5a300" stroke-width="2.6" stroke-linecap="square" />
+        <path transform="translate(4 4)" d="M13,2 L4,13.5 L11,13.5 L10,22 L20,10.5 L12.5,10.5 Z" fill="#f5a300" />
+      </svg>
+      <span class="brand__word">Espaço <span class="brand__accent">Téc</span></span>
     </a>
 
-    <nav class="nav__links">
-      <a href="#processo">Como funciona</a>
-      <a href="#equipamentos">Equipamentos</a>
-      <a href="#documento">Modelo do laudo</a>
-      <a href="#laudo" class="btn btn-primary">Novo laudo</a>
+    <button
+      type="button"
+      class="nav__toggle"
+      [class.is-open]="menuAberto()"
+      [attr.aria-expanded]="menuAberto()"
+      aria-label="Abrir menu"
+      (click)="alternarMenu()">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav__links" [class.is-open]="menuAberto()">
+      <a href="#processo" (click)="fecharMenu()">Como funciona</a>
+      <a href="#equipamentos" (click)="fecharMenu()">Equipamentos</a>
+      <a href="#documento" (click)="fecharMenu()">Modelo do laudo</a>
+      <a href="#laudo" class="btn btn-primary" (click)="fecharMenu()">Novo laudo</a>
     </nav>
   </div>
 </header>

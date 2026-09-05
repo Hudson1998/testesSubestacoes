@@ -75,3 +75,10 @@
 @media (max-width: 900px) {
   .doc__grid { grid-template-columns: 1fr; gap: 28px; }
 }
+
+@media (max-width: 560px) {
+  .doc__page { padding: 18px 15px; }
+  .doc__lead { font-size: 15px; }
+  .doc__list { font-size: 13.5px; }
+  .doc__cta { width: 100%; }
+}

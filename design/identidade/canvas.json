@@ -1,0 +1,11 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1240, "h": 720, "title": "Logo — Espaço Téc" },
+    { "file": "Marca.dc.html", "x": 0, "y": 860, "w": 1240, "h": 560, "title": "Tratamentos do raio" },
+    { "file": "Favicon.dc.html", "x": 1360, "y": 0, "w": 1000, "h": 600, "title": "Favicon" }
+  ],
+  "annotations": [
+    { "id": "nota-identidade", "x": 0, "y": -132, "w": 640, "text": "Identidade \"Espaço Téc\" no sistema visual já aprovado (Técnico industrial — grafite + âmbar, Space Grotesk). Logo = ícone de raio + wordmark, com \"Téc\" em âmbar. Em \"Tratamentos do raio\" há 3 opções do ícone para você escolher a principal; o favicon usa o tratamento vazado (C), que se mantém legível a 16 px." }
+  ],
+  "launch": { "view": "focused", "file": "Main.dc.html" }
+}

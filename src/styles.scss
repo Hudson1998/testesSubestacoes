@@ -1,5 +1,5 @@
 /* ============================================================
-   TENSÃO+ Ensaios — estilos globais / design tokens
+   Espaço Téc — estilos globais / design tokens
    Direção visual: "Técnico industrial" (grafite + âmbar).
    Base portada do canvas de design (design/Main.dc.html).
    ============================================================ */
@@ -38,6 +38,7 @@
 * { box-sizing: border-box; }
 
 html, body { margin: 0; padding: 0; }
+html { overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -45,6 +46,7 @@ body {
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.62;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -55,6 +57,7 @@ h1, h2, h3, h4 {
   line-height: 1.14;
   margin: 0;
   letter-spacing: -0.015em;
+  overflow-wrap: break-word;
 }
 h1 { font-size: 43px; }
 h2 { font-size: 29px; }
@@ -165,7 +168,19 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); }
 
 @media (max-width: 900px) {
   h1 { font-size: 32px; }
+  h2 { font-size: 24px; }
   .wrap { padding: 0 22px; }
   .section { padding: 64px 0; }
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  h1 { font-size: 26px; }
+  h2 { font-size: 21px; }
+  .wrap { padding: 0 16px; }
+  .section { padding: 46px 0; }
+
+  /* alvos de toque maiores e evita zoom automático no iOS */
+  input, select, textarea { font-size: 16px; padding: 12px 13px; }
+  .btn { padding: 14px 20px; }
 }
