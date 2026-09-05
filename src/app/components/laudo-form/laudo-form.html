@@ -31,19 +31,15 @@
               <div class="grid-2" [formGroup]="identForm">
                 <label class="field">
                   <span>Cliente</span>
-                  <input formControlName="cliente" placeholder="Razão social do cliente" />
-                </label>
-                <label class="field">
-                  <span>CNPJ</span>
-                  <input formControlName="cnpj" placeholder="00.000.000/0001-00" />
+                  <input formControlName="cliente" placeholder="Nome do cliente" />
                 </label>
                 <label class="field">
                   <span>Subestação</span>
-                  <input formControlName="subestacao" placeholder="SE Central, SE 03..." />
+                  <input formControlName="subestacao" placeholder="Exemplo: S.E principal" />
                 </label>
                 <label class="field">
                   <span>Endereço / local</span>
-                  <input formControlName="local" placeholder="Cidade / UF" />
+                  <input formControlName="local" placeholder="Endereco cliente" />
                 </label>
                 <label class="field">
                   <span>Data do ensaio</span>
@@ -51,7 +47,7 @@
                 </label>
                 <label class="field">
                   <span>Responsável técnico</span>
-                  <input formControlName="responsavel" placeholder="Nome / CREA" />
+                  <input formControlName="responsavel" placeholder="Nome do responsavel pelos ensaios" />
                 </label>
               </div>
             }
