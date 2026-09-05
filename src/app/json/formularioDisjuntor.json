@@ -36,15 +36,15 @@
         },
         "resistenciaDeContatoDisjuntorAberto": {
             "poloA": {
-                "escala": "µΩ",
+                "escala": ["µΩ","mΩ", "Ω", "kΩ", "MΩ", "GΩ","TΩ"],
                 "valor": ""
             },
             "poloB": {
-                "escala": "µΩ",
+                "escala": ["µΩ","mΩ", "Ω", "kΩ", "MΩ", "GΩ","TΩ"],
                 "valor": ""
             },
             "poloC": {
-                "escala": "µΩ",
+                "escala": ["µΩ","mΩ", "Ω", "kΩ", "MΩ", "GΩ","TΩ"],
                 "valor": ""
             }
         },

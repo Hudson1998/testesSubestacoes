@@ -19,8 +19,8 @@ export const EQUIPAMENTOS: DefinicaoEquipamento[] = [
     nome: 'Disjuntor',
     descricao: 'Alta / média tensão',
     ensaios: [
-      'Resistência de contato por polo (A, B, C)',
-      'Resistência de isolamento entre fases',
+      'Resistência de contato — disjuntor fechado e aberto',
+      'Resistência de isolamento entre fases e para a massa',
       'Registro de placa e nível de óleo',
     ],
     camposIdentificacao: [
@@ -43,19 +43,30 @@ export const EQUIPAMENTOS: DefinicaoEquipamento[] = [
     ],
     secoes: [
       {
-        titulo: 'RESISTÊNCIA DE CONTATO (POR POLO)',
+        titulo: 'RESISTÊNCIA DE CONTATO — DISJUNTOR FECHADO',
         campos: [
-          { chave: 'rcPoloA', rotulo: 'Polo A', unidade: 'µΩ' },
-          { chave: 'rcPoloB', rotulo: 'Polo B', unidade: 'µΩ' },
-          { chave: 'rcPoloC', rotulo: 'Polo C', unidade: 'µΩ' },
+          { chave: 'rcFechadoPoloA', rotulo: 'Polo A', unidade: 'µΩ' },
+          { chave: 'rcFechadoPoloB', rotulo: 'Polo B', unidade: 'µΩ' },
+          { chave: 'rcFechadoPoloC', rotulo: 'Polo C', unidade: 'µΩ' },
         ],
       },
       {
-        titulo: 'RESISTÊNCIA DE ISOLAMENTO (ENTRE FASES)',
+        titulo: 'RESISTÊNCIA DE CONTATO — DISJUNTOR ABERTO',
+        campos: [
+          { chave: 'rcAbertoPoloA', rotulo: 'Polo A', escalas: ['µΩ', 'mΩ', 'Ω', 'kΩ', 'MΩ', 'GΩ', 'TΩ'] },
+          { chave: 'rcAbertoPoloB', rotulo: 'Polo B', escalas: ['µΩ', 'mΩ', 'Ω', 'kΩ', 'MΩ', 'GΩ', 'TΩ'] },
+          { chave: 'rcAbertoPoloC', rotulo: 'Polo C', escalas: ['µΩ', 'mΩ', 'Ω', 'kΩ', 'MΩ', 'GΩ', 'TΩ'] },
+        ],
+      },
+      {
+        titulo: 'RESISTÊNCIA DE ISOLAMENTO',
         campos: [
           { chave: 'riFaseAB', rotulo: 'Fase A – Fase B', escalas: ['GΩ', 'MΩ', 'TΩ'] },
           { chave: 'riFaseAC', rotulo: 'Fase A – Fase C', escalas: ['GΩ', 'MΩ', 'TΩ'] },
           { chave: 'riFaseBC', rotulo: 'Fase B – Fase C', escalas: ['GΩ', 'MΩ', 'TΩ'] },
+          { chave: 'riFaseAMassa', rotulo: 'Fase A – Massa', escalas: ['GΩ', 'MΩ', 'TΩ'] },
+          { chave: 'riFaseBMassa', rotulo: 'Fase B – Massa', escalas: ['GΩ', 'MΩ', 'TΩ'] },
+          { chave: 'riFaseCMassa', rotulo: 'Fase C – Massa', escalas: ['GΩ', 'MΩ', 'TΩ'] },
         ],
       },
     ],

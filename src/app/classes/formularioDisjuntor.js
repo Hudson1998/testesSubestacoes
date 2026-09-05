@@ -43,41 +43,41 @@ class FormularioDisjuntor {
             },
             resistenciaDeContatoDisjuntorAberto: {
                 poloA: {
-                    escala: "µΩ",
+                    escala: ["µΩ", "mΩ", "Ω", "kΩ", "MΩ", "GΩ", "TΩ"],
                     valor: ""
                 },
                 poloB: {
-                    escala: "µΩ",
+                    escala: ["µΩ", "mΩ", "Ω", "kΩ", "MΩ", "GΩ", "TΩ"],
                     valor: ""
                 },
                 poloC: {
-                    escala: "µΩ",
+                    escala: ["µΩ", "mΩ", "Ω", "kΩ", "MΩ", "GΩ", "TΩ"],
                     valor: ""
                 }
             },
             resistenciaDeIsolamento: {
                 fase_A_Massa: {
-                    escala: "MΩ",
+                    escala: ["GΩ", "MΩ", "TΩ"],
                     valor: ""
                 },
                 fase_B_Massa: {
-                    escala: "MΩ",
+                    escala: ["GΩ", "MΩ", "TΩ"],
                     valor: ""
                 },
                 fase_C_Massa: {
-                    escala: "MΩ",
+                    escala: ["GΩ", "MΩ", "TΩ"],
                     valor: ""
                 },
                 fase_A_Fase_B: {
-                    escala: "MΩ",
+                    escala: ["GΩ", "MΩ", "TΩ"],
                     valor: ""
                 },
                 fase_A_Fase_C: {
-                    escala: "MΩ",
+                    escala: ["GΩ", "MΩ", "TΩ"],
                     valor: ""
                 },
                 fase_B_Fase_C: {
-                    escala: "MΩ",
+                    escala: ["GΩ", "MΩ", "TΩ"],
                     valor: ""
                 }
             }
