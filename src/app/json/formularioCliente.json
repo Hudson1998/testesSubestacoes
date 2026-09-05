@@ -1,0 +1,24 @@
+{
+    "Cliente": {
+        "nome": "",
+        "endereco": "",
+        "telefone": "",
+        "email": ""
+    },
+    "Subestacao": {
+        "nome": "",
+        "localizacao": "",
+        "capacidade": "",
+        "tensao": ""
+    },
+    "responsavelTecnico": {
+        "nome": "",
+        "registro": "",
+        "telefone": "",
+        "email": ""
+    },
+    "dataInspecao": {
+        "formato": "dd/MM/yyyy",
+        "valor": ""
+    }
+}

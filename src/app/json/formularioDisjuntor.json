@@ -1,0 +1,78 @@
+{
+    "subestacao":"",
+    "tag": "",
+    "tipoDisjuntor": [["Ar","ACB"], ["Vacuo","VCB"], ["SF6","GCB"], ["oleo","OCB"]],
+    "dataFabricacao": "",
+    "numeroDePoloPorFase": ["1", "2", "3"],
+    "tensaoNominal": {
+        "unidade": ["kV", "V"],
+        "valor": ""
+    },
+    "correnteNominal": {
+        "unidade": "A",
+        "valor": ""
+    },
+    "capacidadeDeInterrupcao": {
+        "unidade": "kA",
+        "valor": ""
+    },
+    "fabricante": "",
+    "numeroDeSerie": "",
+    "nivelDeOleo":["Baixo","Medio","Alto"],
+    "medicao": {
+        "resistenciaDeContatoDisjuntorFechado": {
+            "poloA": {
+                "escala": "µΩ",
+                "valor": ""
+            },
+            "poloB": {
+                "escala": "µΩ",
+                "valor": ""
+            },
+            "poloC": {
+                "escala": "µΩ",
+                "valor": ""
+            }
+        },
+        "resistenciaDeContatoDisjuntorAberto": {
+            "poloA": {
+                "escala": "µΩ",
+                "valor": ""
+            },
+            "poloB": {
+                "escala": "µΩ",
+                "valor": ""
+            },
+            "poloC": {
+                "escala": "µΩ",
+                "valor": ""
+            }
+        },
+        "resistenciaDeIsolamento": {
+            "fase_A_B": {
+                "escala": ["GΩ", "MΩ", "TΩ"],
+                "valor": ""
+            },
+            "fase_A_C": {
+                "escala": ["GΩ", "MΩ", "TΩ"],
+                "valor": ""
+            },
+            "fase_B_C": {
+                "escala": ["GΩ", "MΩ", "TΩ"],
+                "valor": ""
+            },
+            "fase_A_Massa": {
+                "escala": ["GΩ", "MΩ", "TΩ"],
+                "valor": ""
+            },
+            "fase_B_Massa": {
+                "escala": ["GΩ", "MΩ", "TΩ"],
+                "valor": ""
+            },
+            "fase_C_Massa": {
+                "escala": ["GΩ", "MΩ", "TΩ"],
+                "valor": ""
+            }
+        }
+    }
+}

@@ -7,7 +7,7 @@
       medição mudarem e gere o PDF.
     </p>
 
-    <div class="lf__wiz">
+    <div class="lf__wiz" #topoWizard>
       @if (!gerado()) {
         <!-- barra de passos -->
         <div class="lf__steps">
@@ -28,33 +28,80 @@
           @switch (passo()) {
             <!-- passo 1 — cliente & subestação -->
             @case (0) {
-              <div class="grid-2" [formGroup]="identForm">
-                <label class="field">
-                  <span>Cliente</span>
-                  <input formControlName="cliente" placeholder="Nome do cliente" />
-                </label>
-                <label class="field">
-                  <span>Subestação</span>
-                  <input formControlName="subestacao" placeholder="Exemplo: S.E principal" />
-                </label>
-                <label class="field">
-                  <span>Endereço / local</span>
-                  <input formControlName="local" placeholder="Endereco cliente" />
-                </label>
-                <label class="field">
-                  <span>Data do ensaio</span>
-                  <input type="date" formControlName="data" />
-                </label>
-                <label class="field">
-                  <span>Responsável técnico</span>
-                  <input formControlName="responsavel" placeholder="Nome do responsavel pelos ensaios" />
-                </label>
+              <div [formGroup]="clienteForm">
+                <p class="lf__sec-title mono">CLIENTE</p>
+                <div class="grid-2">
+                  <label class="field">
+                    <span>Nome / razão social</span>
+                    <input formControlName="clienteNome" placeholder="Nome do cliente" />
+                  </label>
+                  <label class="field">
+                    <span>Endereço</span>
+                    <input formControlName="clienteEndereco" placeholder="Rua, nº — cidade / UF" />
+                  </label>
+                  <label class="field">
+                    <span>Telefone</span>
+                    <input formControlName="clienteTelefone" placeholder="(00) 00000-0000" />
+                  </label>
+                  <label class="field">
+                    <span>E-mail</span>
+                    <input type="email" formControlName="clienteEmail" placeholder="contato@cliente.com" />
+                  </label>
+                </div>
+
+                <p class="lf__sec-title mono">SUBESTAÇÃO</p>
+                <div class="grid-2">
+                  <label class="field">
+                    <span>Nome / identificação</span>
+                    <input formControlName="seNome" placeholder="Ex.: S.E. Principal" />
+                  </label>
+                  <label class="field">
+                    <span>Localização</span>
+                    <input formControlName="seLocalizacao" placeholder="Cidade / UF" />
+                  </label>
+                  <label class="field">
+                    <span>Capacidade</span>
+                    <input formControlName="seCapacidade" placeholder="Ex.: 15 MVA" />
+                  </label>
+                  <label class="field">
+                    <span>Tensão</span>
+                    <input formControlName="seTensao" placeholder="Ex.: 13,8 kV" />
+                  </label>
+                </div>
+
+                <p class="lf__sec-title mono">RESPONSÁVEL TÉCNICO</p>
+                <div class="grid-2">
+                  <label class="field">
+                    <span>Nome</span>
+                    <input formControlName="respNome" placeholder="Nome do responsável pelos ensaios" />
+                  </label>
+                  <label class="field">
+                    <span>Registro (CREA / ART)</span>
+                    <input formControlName="respRegistro" placeholder="Nº do registro" />
+                  </label>
+                  <label class="field">
+                    <span>Telefone</span>
+                    <input formControlName="respTelefone" placeholder="(00) 00000-0000" />
+                  </label>
+                  <label class="field">
+                    <span>E-mail</span>
+                    <input type="email" formControlName="respEmail" placeholder="eng@empresa.com" />
+                  </label>
+                </div>
+
+                <p class="lf__sec-title mono">DATA DA INSPEÇÃO</p>
+                <div class="grid-2">
+                  <label class="field">
+                    <span>Data</span>
+                    <input type="date" formControlName="dataInspecao" />
+                  </label>
+                </div>
               </div>
             }
 
             <!-- passo 2 — equipamento -->
             @case (1) {
-              <div [formGroup]="identForm">
+              <div [formGroup]="equipForm">
                 <p class="field lf__field-label"><span>Tipo de equipamento</span></p>
                 <div class="lf__equip-pick">
                   @for (eq of equipamentos; track eq.tipo) {
@@ -86,7 +133,7 @@
                     <span>Nº de série</span>
                     <input formControlName="serie" placeholder="Número de série" />
                   </label>
-                  @if (tipo() !== 'transformador') {
+                  @if (!camposIdentificacaoExtra().length) {
                     <label class="field">
                       <span>Tensão nominal</span>
                       <input formControlName="tensao" placeholder="kV" />

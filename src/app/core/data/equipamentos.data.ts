@@ -19,17 +19,45 @@ export const EQUIPAMENTOS: DefinicaoEquipamento[] = [
     nome: 'Disjuntor',
     descricao: 'Alta / média tensão',
     ensaios: [
-      'Resistência de contato',
-      'Tempos de abertura e fechamento',
-      'Simultaneidade entre polos',
-      'Resistência de isolamento',
+      'Resistência de contato por polo (A, B, C)',
+      'Resistência de isolamento entre fases',
+      'Registro de placa e nível de óleo',
     ],
-    campos: [
-      { chave: 'resistenciaContato', rotulo: 'Resistência de contato', unidade: 'µΩ' },
-      { chave: 'tempoAbertura', rotulo: 'Tempo de abertura', unidade: 'ms' },
-      { chave: 'tempoFechamento', rotulo: 'Tempo de fechamento', unidade: 'ms' },
-      { chave: 'simultaneidade', rotulo: 'Simultaneidade entre polos', unidade: 'ms' },
-      { chave: 'resistenciaIsolamento', rotulo: 'Resistência de isolamento', unidade: 'GΩ' },
+    camposIdentificacao: [
+      {
+        chave: 'tipoDisjuntor',
+        rotulo: 'Tipo do disjuntor',
+        opcoes: ['Ar (ACB)', 'Vácuo (VCB)', 'SF6 (GCB)', 'Óleo (OCB)'],
+      },
+      { chave: 'numeroDePoloPorFase', rotulo: 'Nº de polos por fase', opcoes: ['1', '2', '3'] },
+      { chave: 'tensaoNominal', rotulo: 'Tensão nominal', unidade: 'kV', placeholder: 'kV' },
+      { chave: 'correnteNominal', rotulo: 'Corrente nominal', unidade: 'A', placeholder: 'A' },
+      {
+        chave: 'capacidadeDeInterrupcao',
+        rotulo: 'Capacidade de interrupção',
+        unidade: 'kA',
+        placeholder: 'kA',
+      },
+      { chave: 'dataFabricacao', rotulo: 'Data de fabricação', placeholder: 'dd/mm/aaaa' },
+      { chave: 'nivelDeOleo', rotulo: 'Nível de óleo', opcoes: ['Baixo', 'Médio', 'Alto'] },
+    ],
+    secoes: [
+      {
+        titulo: 'RESISTÊNCIA DE CONTATO (POR POLO)',
+        campos: [
+          { chave: 'rcPoloA', rotulo: 'Polo A', unidade: 'µΩ' },
+          { chave: 'rcPoloB', rotulo: 'Polo B', unidade: 'µΩ' },
+          { chave: 'rcPoloC', rotulo: 'Polo C', unidade: 'µΩ' },
+        ],
+      },
+      {
+        titulo: 'RESISTÊNCIA DE ISOLAMENTO (ENTRE FASES)',
+        campos: [
+          { chave: 'riFaseAB', rotulo: 'Fase A – Fase B', escalas: ['GΩ', 'MΩ', 'TΩ'] },
+          { chave: 'riFaseAC', rotulo: 'Fase A – Fase C', escalas: ['GΩ', 'MΩ', 'TΩ'] },
+          { chave: 'riFaseBC', rotulo: 'Fase B – Fase C', escalas: ['GΩ', 'MΩ', 'TΩ'] },
+        ],
+      },
     ],
   },
   {

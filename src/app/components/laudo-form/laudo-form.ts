@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { EQUIPAMENTOS } from '../../core/data/equipamentos.data';
@@ -46,33 +46,73 @@ export class LaudoForm {
 
   readonly camposIdentificacaoExtra = computed(() => this.definicao().camposIdentificacao ?? []);
 
+  private readonly topoWizard = viewChild<ElementRef<HTMLElement>>('topoWizard');
+
+  /** rola a viewport de volta ao topo do assistente ao mudar de passo / gerar o laudo */
+  private irAoTopo(): void {
+    const el = this.topoWizard()?.nativeElement;
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   // --- formulários ---
-  readonly identForm = this.fb.nonNullable.group({
-    cliente: '',
-    cnpj: '',
-    subestacao: '',
-    local: '',
-    data: '',
-    responsavel: '',
-    fabricante: '',
-    modelo: '',
-    tag: '',
-    serie: '',
-    tensao: '',
-    // dados de placa do transformador
-    tensaoPrimaria: '',
-    tensaoSecundaria: '',
-    potencia: '',
-    peso: '',
-    volumeDeOleo: '',
-    relacaoTransformacao: '',
-    tipoDeTensao: 'Alta – Baixa',
-    tipoDeFechamento: 'Triângulo – Estrela',
+  /** dados do cliente / subestação / responsável — compartilhados por todos os equipamentos */
+  readonly clienteForm = this.fb.nonNullable.group({
+    clienteNome: '',
+    clienteEndereco: '',
+    clienteTelefone: '',
+    clienteEmail: '',
+    seNome: '',
+    seLocalizacao: '',
+    seCapacidade: '',
+    seTensao: '',
+    respNome: '',
+    respRegistro: '',
+    respTelefone: '',
+    respEmail: '',
+    dataInspecao: '',
   });
+
+  /** dados do equipamento — isolados por tipo (ver estadoPorTipo) */
+  readonly equipForm = this.fb.nonNullable.group(LaudoForm.equipPadrao());
 
   readonly obs = this.fb.nonNullable.control('');
 
   medicaoForm: FormGroup = this.fb.group({});
+
+  /** guarda equipamento + medições + observações de cada tipo, para os campos não se misturarem */
+  private readonly estadoPorTipo = new Map<
+    TipoEquipamento,
+    { equip: Record<string, string>; medicao: Record<string, string>; obs: string }
+  >();
+
+  private static equipPadrao() {
+    return {
+      // genéricos
+      fabricante: '',
+      modelo: '',
+      tag: '',
+      serie: '',
+      tensao: '',
+      // dados de placa do transformador
+      tensaoPrimaria: '',
+      tensaoSecundaria: '',
+      potencia: '',
+      peso: '',
+      volumeDeOleo: '',
+      relacaoTransformacao: '',
+      tipoDeTensao: 'Alta – Baixa',
+      tipoDeFechamento: 'Triângulo – Estrela',
+      // dados de placa do disjuntor
+      tipoDisjuntor: 'Ar (ACB)',
+      numeroDePoloPorFase: '1',
+      tensaoNominal: '',
+      correnteNominal: '',
+      capacidadeDeInterrupcao: '',
+      dataFabricacao: '',
+      nivelDeOleo: 'Baixo',
+    };
+  }
 
   constructor() {
     this.reconstruirMedicao();
@@ -90,18 +130,37 @@ export class LaudoForm {
   }
 
   // --- navegação ---
-  selecionarTipo(tipo: TipoEquipamento): void {
-    if (tipo === this.tipo()) return;
-    this.tipo.set(tipo);
+  selecionarTipo(novo: TipoEquipamento): void {
+    const atual = this.tipo();
+    if (novo === atual) return;
+
+    // salva o estado do tipo que está saindo
+    this.estadoPorTipo.set(atual, {
+      equip: this.equipForm.getRawValue(),
+      medicao: this.medicaoForm.getRawValue() as Record<string, string>,
+      obs: this.obs.value,
+    });
+
+    this.tipo.set(novo);
     this.reconstruirMedicao();
+
+    // restaura (ou zera) o estado do novo tipo — os campos não se comunicam entre si
+    const salvo = this.estadoPorTipo.get(novo);
+    this.equipForm.reset({ ...LaudoForm.equipPadrao(), ...(salvo?.equip ?? {}) });
+    if (salvo?.medicao) {
+      this.medicaoForm.patchValue(salvo.medicao);
+    }
+    this.obs.setValue(salvo?.obs ?? '');
   }
 
   irPara(indice: number): void {
     this.passo.set(indice);
+    this.irAoTopo();
   }
 
   voltar(): void {
     this.passo.update((p) => Math.max(0, p - 1));
+    this.irAoTopo();
   }
 
   get rotuloPrimario(): string {
@@ -111,6 +170,7 @@ export class LaudoForm {
   acaoPrimaria(): void {
     if (this.passo() < 3) {
       this.passo.update((p) => Math.min(3, p + 1));
+      this.irAoTopo();
       return;
     }
     void this.gerar();
@@ -126,18 +186,20 @@ export class LaudoForm {
 
   // --- geração / envio ---
   private montarDados(): DadosLaudo {
-    const ident = this.identForm.getRawValue();
+    const eq = this.equipForm.getRawValue() as Record<string, string>;
     return {
-      ...ident,
       numero: this.numeroLaudo,
       emitidoEm: new Date().toLocaleString('pt-BR'),
       tipo: this.tipo(),
       equipamento: this.definicao().nome,
+      responsavel: this.clienteForm.getRawValue().respNome,
       observacoes: this.obs.value,
       medicoes: this.medicaoForm.getRawValue() as Record<string, string>,
       identificacao: this.blocoIdentificacao(),
       equipamentoInfo: this.blocoEquipamento(),
       medicoesGrupos: this.blocoMedicoes(),
+      tipoDeTensao: this.tipo() === 'transformador' ? eq['tipoDeTensao'] : undefined,
+      tipoDeFechamento: this.tipo() === 'transformador' ? eq['tipoDeFechamento'] : undefined,
     };
   }
 
@@ -145,6 +207,7 @@ export class LaudoForm {
     await this.pdf.gerar(this.montarDados());
     this.canal.set(null);
     this.gerado.set(true);
+    this.irAoTopo();
   }
 
   enviarWhatsApp(): void {
@@ -166,6 +229,7 @@ export class LaudoForm {
     this.gerado.set(false);
     this.canal.set(null);
     this.passo.set(0);
+    this.irAoTopo();
   }
 
   // --- número / mensagens ---
@@ -194,20 +258,25 @@ export class LaudoForm {
   }
 
   blocoIdentificacao(): LinhaResumo[] {
-    const f = this.identForm.getRawValue();
+    const f = this.clienteForm.getRawValue();
     const t = LaudoForm.TRACO;
+    const juntar = (a: string, b: string) => (a || b ? `${a || t} · ${b || t}` : t);
     return [
-      { rotulo: 'Cliente', valor: f.cliente || t },
-      { rotulo: 'CNPJ', valor: f.cnpj || t },
-      { rotulo: 'Subestação', valor: f.subestacao || t },
-      { rotulo: 'Endereço / local', valor: f.local || t },
-      { rotulo: 'Data do ensaio', valor: f.data || t },
-      { rotulo: 'Responsável técnico', valor: f.responsavel || t },
+      { rotulo: 'Cliente', valor: f.clienteNome || t },
+      { rotulo: 'Endereço', valor: f.clienteEndereco || t },
+      { rotulo: 'Telefone / e-mail', valor: juntar(f.clienteTelefone, f.clienteEmail) },
+      { rotulo: 'Subestação', valor: f.seNome || t },
+      { rotulo: 'Localização', valor: f.seLocalizacao || t },
+      { rotulo: 'Capacidade / tensão', valor: juntar(f.seCapacidade, f.seTensao) },
+      { rotulo: 'Responsável técnico', valor: f.respNome || t },
+      { rotulo: 'Registro (CREA / ART)', valor: f.respRegistro || t },
+      { rotulo: 'Contato do responsável', valor: juntar(f.respTelefone, f.respEmail) },
+      { rotulo: 'Data da inspeção', valor: f.dataInspecao || t },
     ];
   }
 
   blocoEquipamento(): LinhaResumo[] {
-    const f = this.identForm.getRawValue() as Record<string, string>;
+    const f = this.equipForm.getRawValue() as Record<string, string>;
     const t = LaudoForm.TRACO;
     const linhas: LinhaResumo[] = [
       { rotulo: 'Equipamento', valor: this.definicao().nome },

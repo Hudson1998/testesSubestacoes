@@ -311,10 +311,6 @@ export class PdfService {
       setDraw(MUTE);
       doc.setLineWidth(0.4);
       doc.rect(cx - 3, midY + 4, 6, 8, 'S');
-      doc.setFont(FONT, 'normal');
-      doc.setFontSize(6.5);
-      setText(MUTE);
-      doc.text('contato principal', cx, midY + 20, { align: 'center' });
     } else {
       const cx = x + w / 2;
       setDraw(AMBER);
@@ -323,10 +319,6 @@ export class PdfService {
       doc.circle(cx + 20, midY, 1.4, 'FD');
       doc.line(cx - 20, midY, cx + 18, midY - 12);
       doc.line(cx + 16, midY, cx + 20, midY);
-      doc.setFont(FONT, 'normal');
-      doc.setFontSize(6.5);
-      setText(MUTE);
-      doc.text('lâmina / abertura', cx, midY + 18, { align: 'center' });
     }
 
     doc.setFont(FONT, 'normal');

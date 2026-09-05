@@ -1,10 +1,5 @@
 {
-    "tecnicoNome":"",
     "tag":"",
-    "data":{
-        "formato":"dd/MM/yyyy",
-        "valor":""
-    },
     "tensaoPrimaria":{
         "formato":"kV",
         "valor":""

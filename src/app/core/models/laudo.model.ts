@@ -74,31 +74,10 @@ export interface DadosLaudo {
   numero: string;
   emitidoEm: string;
 
-  cliente: string;
-  cnpj: string;
-  subestacao: string;
-  local: string;
-  data: string;
-  responsavel: string;
-
   tipo: TipoEquipamento;
   equipamento: string;
-  fabricante: string;
-  modelo: string;
-  tag: string;
-  serie: string;
-  tensao: string;
-
-  /** dados de placa específicos do transformador */
-  tensaoPrimaria?: string;
-  tensaoSecundaria?: string;
-  potencia?: string;
-  peso?: string;
-  volumeDeOleo?: string;
-  relacaoTransformacao?: string;
-  tipoDeTensao?: string;
-  tipoDeFechamento?: string;
-
+  /** nome do responsável técnico — usado na assinatura */
+  responsavel: string;
   observacoes: string;
 
   /** valores brutos das medições (chave -> valor) */
@@ -108,4 +87,8 @@ export interface DadosLaudo {
   identificacao: LinhaResumo[];
   equipamentoInfo: LinhaResumo[];
   medicoesGrupos: GrupoResumo[];
+
+  /** ligação do transformador — orienta o desenho do esquema no PDF */
+  tipoDeTensao?: string;
+  tipoDeFechamento?: string;
 }

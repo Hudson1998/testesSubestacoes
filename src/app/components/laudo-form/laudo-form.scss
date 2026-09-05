@@ -8,6 +8,8 @@
   border-radius: 4px;
   background: var(--surface);
   overflow: hidden;
+  /* ao rolar para o topo do assistente, não ficar sob o cabeçalho fixo */
+  scroll-margin-top: 84px;
 }
 
 /* barra de passos */
