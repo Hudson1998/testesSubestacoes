@@ -1,0 +1,42 @@
+<section id="equipamentos" class="section">
+  <div class="wrap">
+    <p class="eyebrow">Escopo</p>
+    <h2 class="equip__title">Equipamentos e ensaios cobertos</h2>
+
+    <div class="grid-3">
+      @for (eq of equipamentos; track eq.tipo) {
+        <article class="card equip__card">
+          <span class="equip__icon" [attr.data-tipo]="eq.tipo" aria-hidden="true">
+            @switch (eq.tipo) {
+              @case ('disjuntor') {
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 18 14 8" /><circle cx="4.5" cy="19" r="1.6" /><circle cx="15.5" cy="6.5" r="1.6" /><path d="M15.5 6.5H20M4.5 19H1" />
+                </svg>
+              }
+              @case ('transformador') {
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="9" cy="12" r="5.2" /><circle cx="15" cy="12" r="5.2" />
+                </svg>
+              }
+              @case ('chave') {
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 16 16 6" /><circle cx="3.5" cy="16.5" r="1.6" /><path d="M16 6h4M20 6v4" />
+                </svg>
+              }
+            }
+          </span>
+          <h4>{{ eq.nome }}</h4>
+          <ul class="equip__list">
+            @for (ensaio of eq.ensaios; track ensaio) {
+              <li>{{ ensaio }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+
+    <p class="equip__nota muted">
+      Lista de ensaios ilustrativa — os campos definitivos do formulário serão definidos com você.
+    </p>
+  </div>
+</section>

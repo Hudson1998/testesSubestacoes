@@ -1,0 +1,202 @@
+<section id="laudo" class="section">
+  <div class="wrap">
+    <p class="eyebrow">Novo registro</p>
+    <h2 class="lf__title">Novo laudo de ensaio</h2>
+    <p class="lf__lead muted">
+      Protótipo do formulário. Preencha, troque o equipamento para ver os campos de
+      medição mudarem e gere o PDF.
+    </p>
+
+    <div class="lf__wiz">
+      @if (!gerado()) {
+        <!-- barra de passos -->
+        <div class="lf__steps">
+          @for (nome of passos; track nome; let i = $index) {
+            <button
+              type="button"
+              class="lf__step"
+              [class.is-active]="passoAtivo(i)"
+              [class.is-done]="passoConcluido(i)"
+              (click)="irPara(i)">
+              <span class="lf__step-n mono">{{ (i + 1).toString().padStart(2, '0') }}</span>
+              <span class="lf__step-l">{{ nome }}</span>
+            </button>
+          }
+        </div>
+
+        <div class="lf__body">
+          @switch (passo()) {
+            <!-- passo 1 — cliente & subestação -->
+            @case (0) {
+              <div class="grid-2" [formGroup]="identForm">
+                <label class="field">
+                  <span>Cliente</span>
+                  <input formControlName="cliente" placeholder="Razão social do cliente" />
+                </label>
+                <label class="field">
+                  <span>CNPJ</span>
+                  <input formControlName="cnpj" placeholder="00.000.000/0001-00" />
+                </label>
+                <label class="field">
+                  <span>Subestação</span>
+                  <input formControlName="subestacao" placeholder="SE Central, SE 03..." />
+                </label>
+                <label class="field">
+                  <span>Endereço / local</span>
+                  <input formControlName="local" placeholder="Cidade / UF" />
+                </label>
+                <label class="field">
+                  <span>Data do ensaio</span>
+                  <input type="date" formControlName="data" />
+                </label>
+                <label class="field">
+                  <span>Responsável técnico</span>
+                  <input formControlName="responsavel" placeholder="Nome / CREA" />
+                </label>
+              </div>
+            }
+
+            <!-- passo 2 — equipamento -->
+            @case (1) {
+              <div [formGroup]="identForm">
+                <p class="field lf__field-label"><span>Tipo de equipamento</span></p>
+                <div class="lf__equip-pick">
+                  @for (eq of equipamentos; track eq.tipo) {
+                    <button
+                      type="button"
+                      class="lf__equip-opt"
+                      [class.is-active]="tipo() === eq.tipo"
+                      (click)="selecionarTipo(eq.tipo)">
+                      <span class="lf__equip-t">{{ eq.nome }}</span>
+                      <span class="lf__equip-d">{{ eq.descricao }}</span>
+                    </button>
+                  }
+                </div>
+
+                <div class="grid-2">
+                  <label class="field">
+                    <span>Fabricante</span>
+                    <input formControlName="fabricante" placeholder="Fabricante" />
+                  </label>
+                  <label class="field">
+                    <span>Modelo</span>
+                    <input formControlName="modelo" placeholder="Modelo / tipo" />
+                  </label>
+                  <label class="field">
+                    <span>TAG</span>
+                    <input formControlName="tag" placeholder="TAG do equipamento" />
+                  </label>
+                  <label class="field">
+                    <span>Nº de série</span>
+                    <input formControlName="serie" placeholder="Número de série" />
+                  </label>
+                  <label class="field">
+                    <span>Tensão nominal</span>
+                    <input formControlName="tensao" placeholder="kV" />
+                  </label>
+                </div>
+              </div>
+            }
+
+            <!-- passo 3 — medições -->
+            @case (2) {
+              <div>
+                <p class="lf__meas-head mono">MEDIÇÕES · {{ definicao().nome }}</p>
+                <div class="lf__meas" [formGroup]="medicaoForm">
+                  @for (campo of definicao().campos; track campo.chave) {
+                    <div class="lf__meas-row">
+                      <span class="lf__meas-lbl">{{ campo.rotulo }}</span>
+                      <div class="lf__meas-input">
+                        <input class="mono" [formControlName]="campo.chave" placeholder="0,00" />
+                        <span class="lf__meas-unit mono">{{ campo.unidade }}</span>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <label class="field lf__obs">
+                  <span>Observações do ensaio</span>
+                  <textarea
+                    [formControl]="obs"
+                    rows="3"
+                    placeholder="Anotações, condições, ocorrências..."></textarea>
+                </label>
+              </div>
+            }
+
+            <!-- passo 4 — revisão -->
+            @case (3) {
+              <div class="grid-2 lf__review">
+                <div>
+                  <p class="lf__meas-head mono">IDENTIFICAÇÃO</p>
+                  @for (linha of resumoIdentificacao(); track linha.rotulo) {
+                    <div class="lf__sum-row">
+                      <span class="lf__sum-k">{{ linha.rotulo }}</span>
+                      <span class="lf__sum-v">{{ linha.valor }}</span>
+                    </div>
+                  }
+                </div>
+                <div>
+                  <p class="lf__meas-head mono">MEDIÇÕES · {{ definicao().nome }}</p>
+                  @for (linha of resumoMedicoes(); track linha.rotulo) {
+                    <div class="lf__sum-row">
+                      <span class="lf__sum-k">{{ linha.rotulo }}</span>
+                      <span class="lf__sum-v mono">{{ linha.valor }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          }
+        </div>
+
+        <div class="lf__foot">
+          <button
+            type="button"
+            class="btn-text"
+            [style.visibility]="passo() === 0 ? 'hidden' : 'visible'"
+            (click)="voltar()">
+            ← Voltar
+          </button>
+          <button type="button" class="btn btn-primary" (click)="acaoPrimaria()">
+            {{ rotuloPrimario }}
+          </button>
+        </div>
+      } @else {
+        <!-- resultado -->
+        <div class="lf__result">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" class="lf__result-icon">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8 12.5 10.5 15 16 9" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <h3>Laudo <span class="mono lf__result-num">{{ numeroLaudo }}</span> gerado</h3>
+          <p class="muted lf__result-sub">
+            Número e conteúdo ilustrativos. Confira o documento antes de enviar ao cliente.
+          </p>
+
+          <div class="lf__result-actions">
+            <button type="button" class="btn btn-green" (click)="enviarWhatsApp()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-5.2A8.5 8.5 0 1 1 21 11.5Z" />
+              </svg>
+              Enviar por WhatsApp
+            </button>
+            <button type="button" class="btn btn-ghost" (click)="enviarEmail()">Enviar por e-mail</button>
+            <button type="button" class="btn btn-ghost" (click)="baixar()">Baixar PDF</button>
+          </div>
+
+          @if (canal()) {
+            <div class="lf__toast">
+              <span class="lf__toast-mark">▸</span>{{ mensagemEnvio() }}
+            </div>
+          }
+
+          <button type="button" class="btn-text lf__result-restart" (click)="reiniciar()">
+            Começar novo laudo
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>

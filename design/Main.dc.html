@@ -1,0 +1,480 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #16171a; color: #e9e6e0; font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 15px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: "Space Grotesk", "IBM Plex Sans", system-ui, sans-serif; font-weight: 600; line-height: 1.14; margin: 0; letter-spacing: -0.015em; }
+    h1 { font-size: 43px; }
+    h2 { font-size: 29px; }
+    p { margin: 0; }
+    a { color: #f5a300; text-decoration: none; }
+    a:hover { color: #ffc24d; }
+    .mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; }
+    .app { width: 100%; background: #16171a; }
+    .wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+    .eyebrow { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #8b9096; }
+    .muted { color: #9aa0a6; }
+    .section { padding: 90px 0; border-top: 1px solid #212327; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.01em; padding: 13px 22px; border-radius: 2px; border: 1px solid transparent; cursor: pointer; transition: filter .15s, border-color .15s, background .15s, color .15s; text-decoration: none; }
+    .btn-primary { background: #f5a300; color: #16171a; border-color: #f5a300; }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-ghost { background: transparent; border-color: #3a3d43; color: #e9e6e0; }
+    .btn-ghost:hover { border-color: #787d83; }
+    .btn-green { background: #2fae74; color: #0c1a13; border-color: #2fae74; }
+    .btn-green:hover { filter: brightness(1.08); }
+    .btn-text { background: none; border: 0; color: #9aa0a6; cursor: pointer; font: 600 13px "Space Grotesk", sans-serif; padding: 8px 4px; }
+    .btn-text:hover { color: #e9e6e0; }
+    .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .card { background: #1b1d21; border: 1px solid #2b2e33; border-radius: 3px; }
+    .fld { display: flex; flex-direction: column; gap: 7px; }
+    .fld > span { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: #8b9096; }
+    input, select, textarea { width: 100%; font: inherit; font-size: 14px; color: #e9e6e0; background: #141518; border: 1px solid #33363c; border-radius: 2px; padding: 11px 12px; outline: none; transition: border-color .15s; }
+    textarea { resize: vertical; font-family: inherit; }
+    input::placeholder, textarea::placeholder { color: #5c6167; }
+    input:focus, select:focus, textarea:focus { border-color: #f5a300; }
+    .nav { position: sticky; top: 0; z-index: 20; background: rgba(22,23,26,0.88); backdrop-filter: blur(8px); border-bottom: 1px solid #212327; }
+    .navin { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .navlinks { display: flex; align-items: center; gap: 28px; }
+    .navlinks a { color: #c7c3bb; font-size: 13.5px; font-weight: 500; }
+    .navlinks a:hover { color: #fff; }
+    .brand { display: flex; align-items: baseline; gap: 9px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.01em; color: #fff; }
+    .brand small { font-weight: 500; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #8b9096; font-family: "IBM Plex Mono", monospace; }
+    .hero { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 54px; align-items: center; }
+    .tick { display: inline-block; width: 22px; height: 1px; background: #f5a300; vertical-align: middle; margin-right: 10px; }
+    .livecard { padding: 20px 22px 16px; }
+    .liverow { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #26282d; }
+    .liverow:last-child { border-bottom: 0; }
+    .liverow .lbl { font-size: 12.5px; color: #9aa0a6; }
+    .liverow .val { font-size: 19px; font-weight: 500; color: #fff; }
+    .liverow .un { font-size: 12px; color: #7d8288; margin-left: 4px; }
+    .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #212327; border: 1px solid #212327; border-radius: 3px; overflow: hidden; }
+    .stepcell { background: #1b1d21; padding: 22px 20px; }
+    .stepcell .n { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: #f5a300; letter-spacing: 0.1em; }
+    .stepcell h4 { margin: 12px 0 8px; font-size: 15.5px; }
+    .stepcell p { font-size: 13px; color: #9aa0a6; line-height: 1.55; }
+    .eqcard { padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+    .eqcard h4 { font-size: 16.5px; }
+    .eqcard ul { margin: 0; padding-left: 18px; color: #9aa0a6; font-size: 13.5px; line-height: 1.75; }
+    .wiz { border: 1px solid #2b2e33; border-radius: 4px; background: #1b1d21; overflow: hidden; }
+    .stepsbar { display: flex; }
+    .stepbtn { flex: 1; display: flex; align-items: center; gap: 10px; background: none; border: 0; border-bottom: 2px solid transparent; padding: 16px 16px; cursor: pointer; color: #c7c3bb; font: inherit; text-align: left; }
+    .stepbtn .sn { font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+    .stepbtn .sl { font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+    .wizbody { padding: 28px 30px; }
+    .wizfoot { display: flex; align-items: center; justify-content: space-between; padding: 16px 30px; border-top: 1px solid #2b2e33; background: #191b1f; }
+    .eqpick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .eqopt { border: 1px solid #2c2f34; background: #141518; border-radius: 3px; padding: 15px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; color: inherit; font: inherit; transition: border-color .15s, background .15s; }
+    .eqopt .eqt { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 14.5px; }
+    .eqopt .eqd { font-size: 12px; color: #8b9096; line-height: 1.5; }
+    .measwrap { display: flex; flex-direction: column; gap: 14px; }
+    .measline { display: grid; grid-template-columns: 1fr 200px; gap: 16px; align-items: center; padding-bottom: 14px; border-bottom: 1px solid #26282d; }
+    .measline:last-child { border-bottom: 0; padding-bottom: 0; }
+    .measline .mlbl { font-size: 13.5px; color: #d7d4cc; }
+    .measline .minput { display: flex; align-items: center; gap: 8px; }
+    .measline .munit { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: #7d8288; white-space: nowrap; }
+    .sumrow { display: flex; justify-content: space-between; gap: 20px; padding: 10px 0; border-bottom: 1px solid #26282d; font-size: 13.5px; }
+    .sumrow:last-child { border-bottom: 0; }
+    .sumrow .k { color: #8b9096; }
+    .sumrow .v { color: #e9e6e0; text-align: right; }
+    .result { padding: 34px 30px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .result h3 { font-size: 19px; margin-top: 8px; }
+    .toast { margin-top: 16px; border: 1px solid #33363c; background: #141518; border-radius: 2px; padding: 11px 16px; font-size: 13px; color: #cfccc4; display: flex; align-items: center; gap: 10px; }
+    .docwrap { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 44px; align-items: center; }
+    .docpage { background: #fff; color: #1a1a1a; border-radius: 3px; padding: 24px 22px; font-size: 8.5px; line-height: 1.55; box-shadow: 0 24px 60px rgba(0,0,0,0.42); }
+    .docpage .drow { display: flex; justify-content: space-between; border-bottom: 1px solid #dddddd; padding: 2px 0; }
+    .footer { padding: 44px 0 40px; border-top: 1px solid #212327; color: #8b9096; font-size: 13px; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 34px; }
+      .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid3, .eqpick { grid-template-columns: 1fr; }
+      .grid2 { grid-template-columns: 1fr; }
+      .stepbtn .sl { display: none; }
+      .docwrap { grid-template-columns: 1fr; }
+      h1 { font-size: 32px; }
+    }
+  </style>
+</helmet>
+
+<div class="app">
+
+  <div class="nav"><div class="wrap navin">
+    <div class="brand">TENSÃO<span style="color: {{accent}}">+</span> <small>Ensaios</small></div>
+    <div class="navlinks">
+      <a href="#processo">Como funciona</a>
+      <a href="#equipamentos">Equipamentos</a>
+      <a href="#documento">Modelo do laudo</a>
+      <a href="#laudo" class="btn btn-primary" style="{{btnPrimaryStyle}}">Novo laudo</a>
+    </div>
+  </div></div>
+
+  <div class="wrap" style="padding-top: 80px; padding-bottom: 90px;">
+    <div class="hero">
+      <div>
+        <div class="eyebrow"><span class="tick" style="background: {{accent}}"></span>Manutenção · Ensaios elétricos em campo</div>
+        <h1 style="margin: 22px 0 20px;">Laudo de ensaio da subestação pronto em PDF antes de você sair de campo.</h1>
+        <p class="muted" style="font-size: 16.5px; max-width: 46ch;">Registre as medições de disjuntores, transformadores e chaves seccionadoras no celular ou notebook. O sistema monta o laudo técnico com os dados do cliente e envia por WhatsApp ou e-mail na hora.</p>
+        <div style="display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap;">
+          <a href="#laudo" class="btn btn-primary" style="{{btnPrimaryStyle}}">Iniciar novo laudo</a>
+          <a href="#documento" class="btn btn-ghost">Ver modelo do laudo</a>
+        </div>
+      </div>
+      <div class="card livecard">
+        <div class="eyebrow" style="display: flex; justify-content: space-between;">Medição · Disjuntor <span style="color: {{accent}}">● ao vivo</span></div>
+        <div style="margin-top: 6px;">
+          <div class="liverow"><span class="lbl">Resistência de contato</span><span class="val mono">42.6<span class="un">µΩ</span></span></div>
+          <div class="liverow"><span class="lbl">Tempo de abertura</span><span class="val mono">18.30<span class="un">ms</span></span></div>
+          <div class="liverow"><span class="lbl">Tempo de fechamento</span><span class="val mono">54.1<span class="un">ms</span></span></div>
+          <div class="liverow"><span class="lbl">Resistência de isolamento</span><span class="val mono">5.2<span class="un">GΩ</span></span></div>
+        </div>
+        <div class="mono" style="margin-top: 14px; font-size: 11px; color: #6b7075; letter-spacing: 0.04em;">SE CENTRAL · BAY 03 · VALORES DE EXEMPLO</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="processo"><div class="wrap">
+    <div class="eyebrow">Como funciona</div>
+    <h2 style="margin: 14px 0 40px; max-width: 20ch;">Do campo ao cliente em quatro passos</h2>
+    <div class="steps">
+      <div class="stepcell"><div class="n" style="color: {{accent}}">01</div><h4>Cliente e subestação</h4><p>Cliente, CNPJ, subestação, endereço e data do ensaio.</p></div>
+      <div class="stepcell"><div class="n" style="color: {{accent}}">02</div><h4>Identificação do equipamento</h4><p>Tipo, fabricante, modelo, TAG e número de série.</p></div>
+      <div class="stepcell"><div class="n" style="color: {{accent}}">03</div><h4>Registro das medições</h4><p>Valores de cada ensaio conforme o equipamento selecionado.</p></div>
+      <div class="stepcell"><div class="n" style="color: {{accent}}">04</div><h4>Geração e envio</h4><p>PDF gerado na hora e enviado por WhatsApp ou e-mail ao cliente.</p></div>
+    </div>
+  </div></div>
+
+  <div class="section" id="equipamentos"><div class="wrap">
+    <div class="eyebrow">Escopo</div>
+    <h2 style="margin: 14px 0 40px;">Equipamentos e ensaios cobertos</h2>
+    <div class="grid3">
+      <div class="card eqcard">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 14 8"/><circle cx="4.5" cy="19" r="1.6"/><circle cx="15.5" cy="6.5" r="1.6"/><path d="M15.5 6.5H20M4.5 19H1"/></svg>
+        <h4>Disjuntor</h4>
+        <ul><li>Resistência de contato</li><li>Tempos de abertura e fechamento</li><li>Simultaneidade entre polos</li><li>Resistência de isolamento</li></ul>
+      </div>
+      <div class="card eqcard">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.5"><circle cx="9" cy="12" r="5.2"/><circle cx="15" cy="12" r="5.2"/></svg>
+        <h4>Transformador</h4>
+        <ul><li>Relação de transformação (TTR)</li><li>Resistência ôhmica dos enrolamentos</li><li>Fator de potência do isolamento</li><li>Corrente de excitação</li></ul>
+      </div>
+      <div class="card eqcard">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 16 6"/><circle cx="3.5" cy="16.5" r="1.6"/><path d="M16 6h4M20 6v4"/></svg>
+        <h4>Chave seccionadora</h4>
+        <ul><li>Resistência de contato</li><li>Resistência de isolamento</li><li>Torque de acionamento</li><li>Alinhamento das lâminas</li></ul>
+      </div>
+    </div>
+    <p class="muted" style="font-size: 12.5px; margin-top: 20px;">Lista de ensaios ilustrativa — os campos definitivos do formulário serão definidos com você.</p>
+  </div></div>
+
+  <div class="section" id="laudo"><div class="wrap">
+    <div class="eyebrow">Novo registro</div>
+    <h2 style="margin: 14px 0 10px;">Novo laudo de ensaio</h2>
+    <p class="muted" style="margin-bottom: 30px; max-width: 54ch;">Protótipo do formulário. Preencha, troque o equipamento para ver os campos de medição mudarem e gere o PDF.</p>
+
+    <div class="wiz">
+      <sc-if value="{{notGen}}" hint-placeholder-val="{{true}}">
+      <div>
+        <div class="stepsbar">
+          <sc-for list="{{stepsNav}}" as="st" hint-placeholder-count="4">
+            <button type="button" class="stepbtn" style="{{st.style}}" onClick="{{st.go}}">
+              <span class="sn" style="{{st.numStyle}}">{{st.n}}</span>
+              <span class="sl">{{st.label}}</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div class="wizbody">
+          <sc-if value="{{step0}}" hint-placeholder-val="{{true}}">
+            <div class="grid2">
+              <label class="fld"><span>Cliente</span><input name="cliente" value="{{fv.cliente}}" onChange="{{onField}}" placeholder="Razão social do cliente"></label>
+              <label class="fld"><span>CNPJ</span><input name="cnpj" value="{{fv.cnpj}}" onChange="{{onField}}" placeholder="00.000.000/0001-00"></label>
+              <label class="fld"><span>Subestação</span><input name="subestacao" value="{{fv.subestacao}}" onChange="{{onField}}" placeholder="SE Central, SE 03..."></label>
+              <label class="fld"><span>Endereço / local</span><input name="local" value="{{fv.local}}" onChange="{{onField}}" placeholder="Cidade / UF"></label>
+              <label class="fld"><span>Data do ensaio</span><input type="date" name="data" value="{{fv.data}}" onChange="{{onField}}"></label>
+              <label class="fld"><span>Responsável técnico</span><input name="responsavel" value="{{fv.responsavel}}" onChange="{{onField}}" placeholder="Nome / CREA"></label>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{step1}}" hint-placeholder-val="{{false}}">
+            <div>
+              <div class="fld" style="margin-bottom: 14px;"><span>Tipo de equipamento</span></div>
+              <div class="eqpick">
+                <sc-for list="{{equipOptions}}" as="op" hint-placeholder-count="3">
+                  <button type="button" class="eqopt" style="{{op.style}}" onClick="{{op.pick}}">
+                    <span class="eqt">{{op.label}}</span>
+                    <span class="eqd">{{op.desc}}</span>
+                  </button>
+                </sc-for>
+              </div>
+              <div class="grid2">
+                <label class="fld"><span>Fabricante</span><input name="fabricante" value="{{fv.fabricante}}" onChange="{{onField}}" placeholder="Fabricante"></label>
+                <label class="fld"><span>Modelo</span><input name="modelo" value="{{fv.modelo}}" onChange="{{onField}}" placeholder="Modelo / tipo"></label>
+                <label class="fld"><span>TAG</span><input name="tag" value="{{fv.tag}}" onChange="{{onField}}" placeholder="TAG do equipamento"></label>
+                <label class="fld"><span>Nº de série</span><input name="serie" value="{{fv.serie}}" onChange="{{onField}}" placeholder="Número de série"></label>
+                <label class="fld"><span>Tensão nominal</span><input name="tensao" value="{{fv.tensao}}" onChange="{{onField}}" placeholder="kV"></label>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{step2}}" hint-placeholder-val="{{false}}">
+            <div>
+              <div class="mono" style="font-size: 12px; color: #8b9096; letter-spacing: 0.08em; margin-bottom: 18px;">MEDIÇÕES · {{equipLabel}}</div>
+              <div class="measwrap">
+                <sc-for list="{{measurementFields}}" as="mf" hint-placeholder-count="5">
+                  <div class="measline">
+                    <span class="mlbl">{{mf.label}}</span>
+                    <div class="minput">
+                      <input class="mono" name="{{mf.key}}" value="{{mf.value}}" onChange="{{onField}}" placeholder="0,00">
+                      <span class="munit">{{mf.unit}}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <label class="fld" style="margin-top: 20px;"><span>Observações do ensaio</span><textarea name="obs" rows="3" value="{{fv.obs}}" onChange="{{onField}}" placeholder="Anotações, condições, ocorrências..."></textarea></label>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{step3}}" hint-placeholder-val="{{false}}">
+            <div class="grid2" style="gap: 34px;">
+              <div>
+                <div class="mono" style="font-size: 12px; color: #8b9096; letter-spacing: 0.08em; margin-bottom: 8px;">IDENTIFICAÇÃO</div>
+                <sc-for list="{{summary}}" as="r" hint-placeholder-count="7">
+                  <div class="sumrow"><span class="k">{{r.label}}</span><span class="v">{{r.value}}</span></div>
+                </sc-for>
+              </div>
+              <div>
+                <div class="mono" style="font-size: 12px; color: #8b9096; letter-spacing: 0.08em; margin-bottom: 8px;">MEDIÇÕES · {{equipLabel}}</div>
+                <sc-for list="{{measSummary}}" as="m" hint-placeholder-count="5">
+                  <div class="sumrow"><span class="k">{{m.label}}</span><span class="v mono">{{m.value}}</span></div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div class="wizfoot">
+          <button type="button" class="btn-text" style="{{prevStyle}}" onClick="{{prev}}">← Voltar</button>
+          <button type="button" class="btn btn-primary" style="{{btnPrimaryStyle}}" onClick="{{primaryAction}}">{{primaryLabel}}</button>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{isGen}}" hint-placeholder-val="{{false}}">
+        <div class="result">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 12.5 10.5 15 16 9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Laudo <span class="mono" style="color: {{accent}}">LAUDO-2025-0142</span> gerado</h3>
+          <p class="muted" style="font-size: 13.5px; max-width: 42ch;">Número e conteúdo ilustrativos. Confira o documento antes de enviar ao cliente.</p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+            <button type="button" class="btn btn-green" onClick="{{sendWhats}}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+              Enviar por WhatsApp
+            </button>
+            <button type="button" class="btn btn-ghost" onClick="{{sendEmail}}">Enviar por e-mail</button>
+            <button type="button" class="btn btn-ghost" onClick="{{download}}">Baixar PDF</button>
+          </div>
+          <sc-if value="{{hasSent}}" hint-placeholder-val="{{true}}">
+            <div class="toast"><span style="color: {{accent}}">▸</span>{{sentMsg}}</div>
+          </sc-if>
+          <button type="button" class="btn-text" style="margin-top: 18px;" onClick="{{reset}}">Começar novo laudo</button>
+        </div>
+      </sc-if>
+    </div>
+  </div></div>
+
+  <div class="section" id="documento"><div class="wrap">
+    <div class="eyebrow">Entrega</div>
+    <h2 style="margin: 14px 0 40px;">O laudo que o cliente recebe</h2>
+    <div class="docwrap">
+      <div class="docpage">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 8px;">
+          <div style="font-weight: 700; font-family: 'Space Grotesk', sans-serif; font-size: 11px;">TENSÃO+ · ENSAIOS</div>
+          <div class="mono" style="font-size: 7.5px; text-align: right; line-height: 1.5;">LAUDO Nº 2025-0142<br>REV. 00 · FL. 1/1</div>
+        </div>
+        <div style="font-weight: 700; margin: 10px 0 9px; font-size: 10px;">LAUDO DE ENSAIO — DISJUNTOR</div>
+        <div style="color: #6b6b6b; letter-spacing: 0.12em; font-size: 7px; margin-bottom: 4px;">1. IDENTIFICAÇÃO</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; margin-bottom: 10px;">
+          <div>Cliente: [cliente]</div><div>CNPJ: [cnpj]</div>
+          <div>Subestação: [SE]</div><div>Data: [data]</div>
+          <div>Resp. técnico: [nome]</div><div>CREA/ART: [nº]</div>
+        </div>
+        <div style="color: #6b6b6b; letter-spacing: 0.12em; font-size: 7px; margin-bottom: 4px;">3. RESULTADOS DOS ENSAIOS</div>
+        <div class="mono" style="font-size: 7.5px;">
+          <div class="drow"><span>Resist. de contato</span><span>42,6 µΩ ✓</span></div>
+          <div class="drow"><span>Tempo de abertura</span><span>18,3 ms ✓</span></div>
+          <div class="drow"><span>Tempo de fechamento</span><span>54,1 ms ✓</span></div>
+          <div class="drow"><span>Resist. de isolamento</span><span>5,2 GΩ ✓</span></div>
+        </div>
+        <div style="margin-top: 10px; color: #6b6b6b; letter-spacing: 0.12em; font-size: 7px;">4. PARECER TÉCNICO</div>
+        <div style="font-size: 7.5px;">Equipamento APTO para operação conforme critérios adotados.</div>
+      </div>
+      <div>
+        <p style="font-size: 16px;">Um documento técnico padronizado, com identificação completa, resultados de cada ensaio e parecer — pronto para arquivo e para auditoria.</p>
+        <ul class="muted" style="font-size: 14px; line-height: 1.9; margin-top: 16px; padding-left: 18px;">
+          <li>Cabeçalho com cliente, subestação e nº do laudo</li>
+          <li>Dados de identificação e placa do equipamento</li>
+          <li>Tabela de ensaios: valor medido, unidade, critério e situação</li>
+          <li>Parecer técnico e campo de assinaturas</li>
+          <li>Envio direto por WhatsApp ou e-mail</li>
+        </ul>
+        <p class="mono" style="font-size: 11.5px; color: #6b7075; margin-top: 18px; letter-spacing: 0.04em;">CAMPOS ILUSTRATIVOS · VERSÃO FINAL NA PRÓXIMA ETAPA</p>
+        <a href="#laudo" class="btn btn-primary" style="{{btnPrimaryStyle}}; margin-top: 18px;">Preencher um laudo</a>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="footer"><div class="wrap" style="display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; align-items: flex-start;">
+    <div>
+      <div class="brand" style="font-size: 16px;">TENSÃO<span style="color: {{accent}}">+</span> <small>Ensaios</small></div>
+      <p style="margin-top: 10px; max-width: 40ch;">[SUA EMPRESA] · CNPJ 00.000.000/0001-00 · Ensaios conforme NR-10 e normas NBR aplicáveis.</p>
+    </div>
+    <div class="mono" style="font-size: 12px; line-height: 2; color: #8b9096;">
+      [E-MAIL DE CONTATO]<br>[TELEFONE / WHATSAPP]<br>[CIDADE / UF]
+    </div>
+  </div>
+  <div class="wrap mono" style="font-size: 11px; color: #5c6167; margin-top: 24px; letter-spacing: 0.04em;">PROTÓTIPO · DADOS FICTÍCIOS · MARCA E CONTATOS SÃO PLACEHOLDERS</div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1440,"height":3400},"accent":{"editor":"color","default":"#f5a300","options":["#f5a300","#3ecf8e","#4da3ff","#ff5c5c"],"section":"Tema"}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, equipamento: "disjuntor", form: {}, generated: false, sent: "" };
+  }
+  renderVals() {
+    const S = this.state;
+    const f = S.form || {};
+    const accent = this.props.accent || "#f5a300";
+
+    const equipDefs = {
+      disjuntor: {
+        label: "Disjuntor",
+        desc: "Alta / média tensão",
+        fields: [
+          { key: "d_rcontato", label: "Resistência de contato", unit: "µΩ" },
+          { key: "d_tabertura", label: "Tempo de abertura", unit: "ms" },
+          { key: "d_tfechamento", label: "Tempo de fechamento", unit: "ms" },
+          { key: "d_simult", label: "Simultaneidade entre polos", unit: "ms" },
+          { key: "d_riso", label: "Resistência de isolamento", unit: "GΩ" }
+        ]
+      },
+      transformador: {
+        label: "Transformador",
+        desc: "Força / distribuição",
+        fields: [
+          { key: "t_ttr", label: "Relação de transformação (TTR)", unit: "ratio" },
+          { key: "t_rat", label: "Resistência ôhmica — AT", unit: "Ω" },
+          { key: "t_rbt", label: "Resistência ôhmica — BT", unit: "mΩ" },
+          { key: "t_fp", label: "Fator de potência do isolamento", unit: "%" },
+          { key: "t_iexc", label: "Corrente de excitação", unit: "mA" },
+          { key: "t_riso", label: "Resistência de isolamento", unit: "GΩ" }
+        ]
+      },
+      chave: {
+        label: "Chave seccionadora",
+        desc: "Lâmina / abertura",
+        fields: [
+          { key: "c_rcontato", label: "Resistência de contato", unit: "µΩ" },
+          { key: "c_riso", label: "Resistência de isolamento", unit: "GΩ" },
+          { key: "c_torque", label: "Torque de acionamento", unit: "N·m" },
+          { key: "c_alinh", label: "Alinhamento das lâminas", unit: "mm" }
+        ]
+      }
+    };
+
+    const stepLabels = ["Cliente & Subestação", "Equipamento", "Medições", "Revisão & Envio"];
+    const stepsNav = stepLabels.map((label, i) => {
+      const active = S.step === i;
+      const done = S.step > i;
+      return {
+        n: String(i + 1).padStart(2, "0"),
+        label: label,
+        go: () => this.setState({ step: i }),
+        style: "border-bottom-color:" + (active ? accent : "transparent") + ";opacity:" + (active || done ? "1" : "0.5"),
+        numStyle: "color:" + (active ? accent : "#6b7075")
+      };
+    });
+
+    const fkeys = ["cliente", "cnpj", "subestacao", "local", "data", "responsavel", "fabricante", "modelo", "tag", "serie", "tensao", "obs"];
+    const fv = {};
+    fkeys.forEach((k) => { fv[k] = f[k] || ""; });
+
+    const onField = (e) => this.setState({ form: { ...this.state.form, [e.target.name]: e.target.value } });
+
+    const equipOptions = Object.keys(equipDefs).map((k) => {
+      const on = S.equipamento === k;
+      return {
+        key: k,
+        label: equipDefs[k].label,
+        desc: equipDefs[k].desc,
+        pick: () => this.setState({ equipamento: k }),
+        style: "border-color:" + (on ? accent : "#2c2f34") + ";background:" + (on ? "rgba(245,163,0,0.07)" : "#141518")
+      };
+    });
+
+    const cur = equipDefs[S.equipamento] || equipDefs.disjuntor;
+    const measurementFields = cur.fields.map((x) => ({ key: x.key, label: x.label, unit: x.unit, value: f[x.key] || "" }));
+    const measSummary = measurementFields.map((x) => ({ label: x.label, value: x.value ? x.value + " " + x.unit : "—" }));
+
+    const dash = "—";
+    const summary = [
+      { label: "Cliente", value: fv.cliente || dash },
+      { label: "Subestação", value: fv.subestacao || dash },
+      { label: "Data do ensaio", value: fv.data || dash },
+      { label: "Responsável técnico", value: fv.responsavel || dash },
+      { label: "Equipamento", value: cur.label },
+      { label: "Fabricante / modelo", value: (fv.fabricante || dash) + "  /  " + (fv.modelo || dash) },
+      { label: "TAG / nº de série", value: (fv.tag || dash) + "  /  " + (fv.serie || dash) }
+    ];
+
+    const step = S.step;
+    const primaryAction = step < 3
+      ? () => this.setState({ step: Math.min(3, step + 1) })
+      : () => this.setState({ generated: true, sent: "" });
+
+    const sentMap = {
+      whatsapp: "Abrindo o WhatsApp do cliente com LAUDO-2025-0142.pdf anexado…",
+      email: "Enviando LAUDO-2025-0142.pdf para o e-mail cadastrado do cliente…",
+      download: "Baixando LAUDO-2025-0142.pdf…"
+    };
+
+    return {
+      accent: accent,
+      stepsNav: stepsNav,
+      step0: step === 0, step1: step === 1, step2: step === 2, step3: step === 3,
+      fv: fv,
+      onField: onField,
+      equipOptions: equipOptions,
+      equipLabel: cur.label,
+      measurementFields: measurementFields,
+      measSummary: measSummary,
+      summary: summary,
+      primaryLabel: step < 3 ? "Próximo →" : "Gerar laudo em PDF",
+      primaryAction: primaryAction,
+      prev: () => this.setState({ step: Math.max(0, step - 1) }),
+      prevStyle: "visibility:" + (step === 0 ? "hidden" : "visible"),
+      notGen: !S.generated,
+      isGen: !!S.generated,
+      sendWhats: () => this.setState({ sent: "whatsapp" }),
+      sendEmail: () => this.setState({ sent: "email" }),
+      download: () => this.setState({ sent: "download" }),
+      reset: () => this.setState({ generated: false, sent: "", step: 0 }),
+      hasSent: !!S.sent,
+      sentMsg: sentMap[S.sent] || "",
+      btnPrimaryStyle: "background:" + accent + ";color:#16171a;border-color:" + accent
+    };
+  }
+}
+</script>
+</body>
+</html>

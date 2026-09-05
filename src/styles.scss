@@ -1,0 +1,171 @@
+/* ============================================================
+   TENSÃO+ Ensaios — estilos globais / design tokens
+   Direção visual: "Técnico industrial" (grafite + âmbar).
+   Base portada do canvas de design (design/Main.dc.html).
+   ============================================================ */
+
+:root {
+  color-scheme: dark;
+
+  /* superfícies */
+  --bg: #16171a;
+  --surface: #1b1d21;
+  --surface-2: #141518;
+  --surface-3: #191b1f;
+  --border: #2b2e33;
+  --border-2: #33363c;
+
+  /* texto */
+  --text: #e9e6e0;
+  --text-dim: #9aa0a6;
+  --text-mute: #8b9096;
+  --text-faint: #6b7075;
+
+  /* acento */
+  --accent: #f5a300;
+  --accent-hi: #ffc24d;
+  --accent-soft: rgba(245, 163, 0, 0.07);
+  --ok: #2fae74;
+
+  /* tipografia */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --wrap: 1160px;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.14;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+h1 { font-size: 43px; }
+h2 { font-size: 29px; }
+
+p { margin: 0; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hi); }
+
+.mono { font-family: var(--font-mono); }
+
+/* ---- layout ---- */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.section {
+  padding: 90px 0;
+  border-top: 1px solid #212327;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.muted { color: var(--text-dim); }
+
+/* ---- botões ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  padding: 13px 22px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: filter .15s, border-color .15s, background .15s, color .15s;
+  text-decoration: none;
+}
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-primary { background: var(--accent); color: #16171a; border-color: var(--accent); }
+.btn-primary:hover { filter: brightness(1.08); color: #16171a; }
+
+.btn-ghost { background: transparent; border-color: #3a3d43; color: var(--text); }
+.btn-ghost:hover { border-color: #787d83; color: var(--text); }
+
+.btn-green { background: var(--ok); color: #0c1a13; border-color: var(--ok); }
+.btn-green:hover { filter: brightness(1.08); color: #0c1a13; }
+
+.btn-text {
+  background: none;
+  border: 0;
+  color: var(--text-dim);
+  cursor: pointer;
+  font: 600 13px var(--font-display);
+  padding: 8px 4px;
+}
+.btn-text:hover { color: var(--text); }
+
+/* ---- cartão ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* ---- campos de formulário ---- */
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field > span {
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+input, select, textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 2px;
+  padding: 11px 12px;
+  outline: none;
+  transition: border-color .15s;
+}
+textarea { resize: vertical; font-family: inherit; }
+input::placeholder, textarea::placeholder { color: #5c6167; }
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+
+/* ---- grids utilitários ---- */
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+
+@media (max-width: 900px) {
+  h1 { font-size: 32px; }
+  .wrap { padding: 0 22px; }
+  .section { padding: 64px 0; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}

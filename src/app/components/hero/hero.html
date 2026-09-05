@@ -1,0 +1,36 @@
+<section id="topo" class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <p class="eyebrow">
+        <span class="hero__tick"></span>Manutenção · Ensaios elétricos em campo
+      </p>
+      <h1 class="hero__title">
+        Laudo de ensaio da subestação pronto em PDF antes de você sair de campo.
+      </h1>
+      <p class="hero__lead muted">
+        Registre as medições de disjuntores, transformadores e chaves seccionadoras no
+        celular ou notebook. O sistema monta o laudo técnico com os dados do cliente e
+        envia por WhatsApp ou e-mail na hora.
+      </p>
+      <div class="hero__cta">
+        <a href="#laudo" class="btn btn-primary">Iniciar novo laudo</a>
+        <a href="#documento" class="btn btn-ghost">Ver modelo do laudo</a>
+      </div>
+    </div>
+
+    <div class="card livecard">
+      <p class="eyebrow livecard__head">
+        Medição · Disjuntor <span class="livecard__live">● ao vivo</span>
+      </p>
+      <div class="livecard__rows">
+        @for (l of leituras; track l.rotulo) {
+          <div class="livecard__row">
+            <span class="livecard__lbl">{{ l.rotulo }}</span>
+            <span class="livecard__val mono">{{ l.valor }}<span class="livecard__un">{{ l.unidade }}</span></span>
+          </div>
+        }
+      </div>
+      <p class="livecard__foot mono">SE CENTRAL · BAY 03 · VALORES DE EXEMPLO</p>
+    </div>
+  </div>
+</section>

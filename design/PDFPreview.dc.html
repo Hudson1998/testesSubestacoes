@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .page { width: 794px; min-height: 1123px; background: #ffffff; color: #1a1a1a; font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif; font-size: 13px; line-height: 1.55; padding: 46px 54px 40px; }
+    .mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; }
+    .flag { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: 0.14em; color: #8a6a00; border: 1px solid #e6c780; background: #fdf6e6; padding: 3px 8px; border-radius: 2px; }
+    .head { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 14px; }
+    .wordmark { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: 0.01em; }
+    .wordmark span { color: #f5a300; }
+    .sub { font-size: 10.5px; color: #6b6b6b; letter-spacing: 0.04em; margin-top: 2px; }
+    .docbox { border: 1px solid #cbc7bf; border-radius: 2px; padding: 8px 12px; font-size: 10px; line-height: 1.7; text-align: right; min-width: 190px; }
+    .docbox b { display: inline-block; color: #6b6b6b; font-weight: 500; letter-spacing: 0.08em; margin-right: 8px; }
+    .barr { height: 3px; background: #1a1a1a; margin: 14px 0 4px; position: relative; }
+    .barr::after { content: ""; position: absolute; left: 0; top: 0; width: 96px; height: 3px; background: #f5a300; }
+    .title { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 20px; margin: 18px 0 3px; }
+    .titlesub { font-size: 11.5px; color: #6b6b6b; margin-bottom: 20px; }
+    .sec { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; background: #f2f0ec; border-left: 3px solid #1a1a1a; padding: 6px 10px; margin: 18px 0 10px; }
+    .kv { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 26px; font-size: 12px; }
+    .kv div { border-bottom: 1px solid #e8e5df; padding-bottom: 4px; }
+    .kv b { color: #6b6b6b; font-weight: 500; letter-spacing: 0.03em; }
+    table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 4px; }
+    th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b6b6b; border-bottom: 1.5px solid #1a1a1a; padding: 6px 8px; }
+    td { border-bottom: 1px solid #e8e5df; padding: 7px 8px; vertical-align: top; }
+    td.num { font-family: "IBM Plex Mono", monospace; }
+    .ok { color: #1c7a4a; font-weight: 600; white-space: nowrap; }
+    .parecer { font-size: 13px; line-height: 1.75; margin-top: 6px; }
+    .parecer .apt { font-weight: 600; }
+    .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 40px; }
+    .sign div { border-top: 1px solid #1a1a1a; padding-top: 6px; font-size: 10.5px; color: #6b6b6b; }
+    .foot { margin-top: 34px; border-top: 1px solid #cbc7bf; padding-top: 10px; font-family: "IBM Plex Mono", monospace; font-size: 9px; color: #7a7a7a; line-height: 1.7; letter-spacing: 0.02em; }
+  </style>
+</helmet>
+
+<div class="page">
+  <span class="flag">MODELO ILUSTRATIVO — CAMPOS A DEFINIR</span>
+
+  <div class="head">
+    <div>
+      <div class="wordmark">TENSÃO<span>+</span> Ensaios</div>
+      <div class="sub">Relatório de ensaio em campo · Manutenção de subestações</div>
+    </div>
+    <div class="docbox mono">
+      <div><b>LAUDO Nº</b>2025-0142</div>
+      <div><b>REVISÃO</b>00</div>
+      <div><b>EMISSÃO</b>[dd/mm/aaaa]</div>
+      <div><b>FOLHA</b>1 / 1</div>
+    </div>
+  </div>
+
+  <div class="barr"></div>
+
+  <div class="title">LAUDO DE ENSAIO</div>
+  <div class="titlesub">Disjuntor de alta tensão — ensaios de manutenção / comissionamento</div>
+
+  <div class="sec">1 · Identificação</div>
+  <div class="kv">
+    <div><b>Cliente:</b> [razão social]</div>
+    <div><b>CNPJ:</b> [00.000.000/0001-00]</div>
+    <div><b>Subestação:</b> [SE ____]</div>
+    <div><b>Endereço / local:</b> [cidade / UF]</div>
+    <div><b>Data do ensaio:</b> [dd/mm/aaaa]</div>
+    <div><b>Condições ambientais:</b> [__ °C / __ % UR]</div>
+    <div><b>Responsável técnico:</b> [nome]</div>
+    <div><b>CREA / ART:</b> [número]</div>
+  </div>
+
+  <div class="sec">2 · Dados do equipamento</div>
+  <div class="kv">
+    <div><b>Tipo:</b> Disjuntor</div>
+    <div><b>Fabricante:</b> [fabricante]</div>
+    <div><b>Modelo / tipo:</b> [modelo]</div>
+    <div><b>Nº de série:</b> [série]</div>
+    <div><b>TAG:</b> [tag]</div>
+    <div><b>Tensão nominal:</b> [__ kV]</div>
+    <div><b>Corrente nominal:</b> [__ A]</div>
+    <div><b>Ano de fabricação:</b> [aaaa]</div>
+  </div>
+
+  <div class="sec">3 · Resultados dos ensaios</div>
+  <table>
+    <thead><tr><th>Ensaio</th><th>Instrumento / método</th><th>Valor medido</th><th>Un.</th><th>Critério</th><th>Situação</th></tr></thead>
+    <tbody>
+      <tr><td>Resistência de contato</td><td>Micro-ohmímetro 100 A</td><td class="num">42,6</td><td class="num">µΩ</td><td class="num">≤ 50</td><td class="ok">✓ Conforme</td></tr>
+      <tr><td>Tempo de abertura</td><td>Analisador de disjuntor</td><td class="num">18,3</td><td class="num">ms</td><td class="num">16–22</td><td class="ok">✓ Conforme</td></tr>
+      <tr><td>Tempo de fechamento</td><td>Analisador de disjuntor</td><td class="num">54,1</td><td class="num">ms</td><td class="num">≤ 60</td><td class="ok">✓ Conforme</td></tr>
+      <tr><td>Simultaneidade entre polos</td><td>Analisador de disjuntor</td><td class="num">1,2</td><td class="num">ms</td><td class="num">≤ 2</td><td class="ok">✓ Conforme</td></tr>
+      <tr><td>Resistência de isolamento</td><td>Megôhmetro 5 kV</td><td class="num">5,2</td><td class="num">GΩ</td><td class="num">≥ 1</td><td class="ok">✓ Conforme</td></tr>
+      <tr><td>Resistência ôhmica da bobina</td><td>Ponte de resistência</td><td class="num">[—]</td><td class="num">Ω</td><td class="num">[ref.]</td><td>[—]</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec">4 · Parecer técnico</div>
+  <div class="parecer">Com base nos ensaios realizados e nos critérios de referência adotados, o equipamento apresenta resultados dentro dos limites esperados, estando <span class="apt">APTO para operação</span>. [Observações e recomendações adicionais entram aqui.]</div>
+
+  <div class="sign">
+    <div>Responsável técnico pela execução — nome e CREA</div>
+    <div>Responsável pelo cliente — nome e cargo</div>
+  </div>
+
+  <div class="foot">
+    Documento gerado eletronicamente por [SISTEMA] em [dd/mm/aaaa às hh:mm] · identificador [________].<br>
+    Ensaios executados conforme NR-10 e normas NBR aplicáveis · Página 1 de 1.<br>
+    Valores e campos entre colchetes são exemplos — a estrutura final será ajustada na próxima etapa.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

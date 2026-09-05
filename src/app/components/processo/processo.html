@@ -1,0 +1,16 @@
+<section id="processo" class="section">
+  <div class="wrap">
+    <p class="eyebrow">Como funciona</p>
+    <h2 class="processo__title">Do campo ao cliente em quatro passos</h2>
+
+    <div class="processo__grid">
+      @for (p of passos; track p.n) {
+        <article class="processo__cell">
+          <div class="processo__n mono">{{ p.n }}</div>
+          <h4>{{ p.titulo }}</h4>
+          <p>{{ p.texto }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>

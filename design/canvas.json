@@ -1,0 +1,11 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 3400, "expand": "fill", "is_interactive": true, "title": "Site — one page" },
+    { "file": "PDFPreview.dc.html", "x": 1580, "y": 0, "w": 794, "h": 1123, "expand": "fit", "print": "fixed", "title": "Modelo do laudo (PDF)" }
+  ],
+  "annotations": [
+    { "id": "nota-site", "x": 0, "y": -132, "w": 560, "text": "Protótipo clicável da one-page. Navegue pelas seções, preencha \"Novo laudo\", troque o equipamento (o bloco de medições muda) e clique em \"Gerar laudo em PDF\" para ver o envio por WhatsApp / e-mail. Marca, contatos e lista de ensaios são placeholders — os campos reais entram na próxima etapa." },
+    { "id": "nota-pdf", "x": 1580, "y": -132, "w": 460, "text": "Modelo ilustrativo do PDF entregue ao cliente. Estrutura para discutirmos; valores e campos entre colchetes são exemplos." }
+  ],
+  "launch": { "view": "focused", "file": "Main.dc.html" }
+}
