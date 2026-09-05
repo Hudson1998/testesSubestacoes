@@ -1,13 +1,34 @@
 {
     "tecnicoNome":"",
-    "data":"",
-    "tensaoPrimaria":"",
-    "tensaoSecundaria":"",
-    "potencia":"",
-    "peso":"",
-    "volumeDeOleo":"",
+    "tag":"",
+    "data":{
+        "formato":"dd/MM/yyyy",
+        "valor":""
+    },
+    "tensaoPrimaria":{
+        "formato":"kV",
+        "valor":""
+    },
+    "tensaoSecundaria":{
+        "formato":"V",
+        "valor":""
+    },
+    "potencia":{
+        "formato":"kVA",
+        "valor":""
+    },
+    "peso":{
+        "formato":"kg",
+        "valor":""
+    },
+    "volumeDeOleo":{
+        "formato":"L",
+        "valor":""
+    },
     "fabricante":"",
     "numeroDeSerie":"",
+    "tipoDeTensao":["Baixa-Baixa","Alta-Baixa","Baixa-Alta","Alta-Alta","Media-Baixa","Alta-Media"],
+    "tipoDeFechamento":["triangulo-estrela","estrela-triangulo","estrela-estrela","triangulo-triangulo","zigue-zague-estrela","zigue-zague-triangulo","triangulo-zigue-zague","estrela-zigue-zague"],
     "relacaoDeTransformacao":"",
     "medicao":{
         "relacaoDeTransformacao":"",
@@ -15,27 +36,27 @@
         "umidadeAmbiente":"",
           "resistenciaDeContato":{
             "medicao_H1_H2":{
-                "escala":"ohms",
+                "escala":"Ω",
                 "valor":""
             },
             "medicao_H2_H3":{
-                "escala":"ohms",
+                "escala":"Ω",
                 "valor":""
             },
             "medicao_H1_H3":{
-                "escala":"ohms",
+                "escala":"Ω",
                 "valor":""
             },
             "medicao_X0_X1":{
-                "escala":"mili ohms",
+                "escala":"mΩ",
                 "valor":""
             },
             "medicao_X0_X2":{
-                "escala":"mili ohms",
+                "escala":"mΩ",
                 "valor":""
             },
             "medicao_X0_X3":{
-                "escala":"mili ohms",
+                "escala":"mΩ",
                 "valor":""
             }
         },
@@ -46,15 +67,15 @@
         },
         "resistenciaDeIsolamento":{
             "AltaMassaGuardaBaixa":{
-                "escala":["Giga ohms","Mega ohms","Tera ohms"],
+                "escala":["GΩ","MΩ","TΩ"],
                 "valor":""
             },
             "AltaBaixaGuardaMassa":{
-                "escala":["Giga ohms","Mega ohms","Tera ohms"],
+                "escala":["GΩ","MΩ","TΩ"],
                 "valor":""
             },
             "BaixaAltaGuardaMassa":{
-                "escala":["Giga ohms","Mega ohms","Tera ohms"],
+                "escala":["GΩ","MΩ","TΩ"],
                 "valor":""
             }
         }

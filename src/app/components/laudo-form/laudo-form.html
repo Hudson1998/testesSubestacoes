@@ -86,11 +86,33 @@
                     <span>Nº de série</span>
                     <input formControlName="serie" placeholder="Número de série" />
                   </label>
-                  <label class="field">
-                    <span>Tensão nominal</span>
-                    <input formControlName="tensao" placeholder="kV" />
-                  </label>
+                  @if (tipo() !== 'transformador') {
+                    <label class="field">
+                      <span>Tensão nominal</span>
+                      <input formControlName="tensao" placeholder="kV" />
+                    </label>
+                  }
                 </div>
+
+                @if (camposIdentificacaoExtra().length) {
+                  <p class="lf__sec-title mono">DADOS DE PLACA</p>
+                  <div class="grid-2">
+                    @for (campo of camposIdentificacaoExtra(); track campo.chave) {
+                      <label class="field">
+                        <span>{{ campo.rotulo }}@if (campo.unidade) { ({{ campo.unidade }}) }</span>
+                        @if (campo.opcoes) {
+                          <select [formControlName]="campo.chave">
+                            @for (op of campo.opcoes; track op) {
+                              <option [value]="op">{{ op }}</option>
+                            }
+                          </select>
+                        } @else {
+                          <input [formControlName]="campo.chave" [placeholder]="campo.placeholder ?? ''" />
+                        }
+                      </label>
+                    }
+                  </div>
+                }
               </div>
             }
 
@@ -98,17 +120,48 @@
             @case (2) {
               <div>
                 <p class="lf__meas-head mono">MEDIÇÕES · {{ definicao().nome }}</p>
-                <div class="lf__meas" [formGroup]="medicaoForm">
-                  @for (campo of definicao().campos; track campo.chave) {
-                    <div class="lf__meas-row">
-                      <span class="lf__meas-lbl">{{ campo.rotulo }}</span>
-                      <div class="lf__meas-input">
-                        <input class="mono" [formControlName]="campo.chave" placeholder="0,00" />
-                        <span class="lf__meas-unit mono">{{ campo.unidade }}</span>
+
+                <div [formGroup]="medicaoForm">
+                  @if (definicao().secoes; as secoes) {
+                    @for (sec of secoes; track sec.titulo) {
+                      <p class="lf__sec-title mono">{{ sec.titulo }}</p>
+                      <div class="lf__meas">
+                        @for (campo of sec.campos; track campo.chave) {
+                          <div class="lf__meas-row">
+                            <span class="lf__meas-lbl">{{ campo.rotulo }}</span>
+                            <div class="lf__meas-input">
+                              <input class="mono" [formControlName]="campo.chave" placeholder="0,00" />
+                              @if (campo.escalas) {
+                                <select
+                                  class="lf__meas-escala mono"
+                                  [formControlName]="campo.chave + '__escala'">
+                                  @for (op of campo.escalas; track op) {
+                                    <option [value]="op">{{ op }}</option>
+                                  }
+                                </select>
+                              } @else if (campo.unidade) {
+                                <span class="lf__meas-unit mono">{{ campo.unidade }}</span>
+                              }
+                            </div>
+                          </div>
+                        }
                       </div>
+                    }
+                  } @else {
+                    <div class="lf__meas">
+                      @for (campo of definicao().campos ?? []; track campo.chave) {
+                        <div class="lf__meas-row">
+                          <span class="lf__meas-lbl">{{ campo.rotulo }}</span>
+                          <div class="lf__meas-input">
+                            <input class="mono" [formControlName]="campo.chave" placeholder="0,00" />
+                            <span class="lf__meas-unit mono">{{ campo.unidade }}</span>
+                          </div>
+                        </div>
+                      }
                     </div>
                   }
                 </div>
+
                 <label class="field lf__obs">
                   <span>Observações do ensaio</span>
                   <textarea

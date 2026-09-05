@@ -27,6 +27,15 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "jspdf",
+              "html2canvas",
+              "canvg",
+              "dompurify",
+              "core-js",
+              "raf",
+              "rgbcolor"
+            ],
             "assets": [
               {
                 "glob": "**/*",

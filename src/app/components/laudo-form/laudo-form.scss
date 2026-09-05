@@ -78,11 +78,19 @@
   margin-bottom: 18px;
 }
 
+.lf__sec-title {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 28px 0 14px;
+}
+.lf__sec-title:first-child { margin-top: 4px; }
+
 .lf__meas { display: flex; flex-direction: column; gap: 14px; }
 
 .lf__meas-row {
   display: grid;
-  grid-template-columns: 1fr 200px;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
   gap: 16px;
   align-items: center;
   padding-bottom: 14px;
@@ -92,10 +100,17 @@
 
 .lf__meas-lbl { font-size: 13.5px; color: #d7d4cc; }
 .lf__meas-input { display: flex; align-items: center; gap: 8px; }
+.lf__meas-input input { flex: 1; min-width: 0; }
 .lf__meas-unit {
   font-size: 12px;
   color: #7d8288;
   white-space: nowrap;
+}
+.lf__meas-escala {
+  flex: none;
+  width: auto;
+  font-size: 12.5px;
+  padding: 9px 8px;
 }
 
 .lf__obs { margin-top: 20px; }

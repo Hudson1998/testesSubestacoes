@@ -2,16 +2,17 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { EQUIPAMENTOS } from '../../core/data/equipamentos.data';
-import { DadosLaudo, TipoEquipamento } from '../../core/models/laudo.model';
+import {
+  CampoMedicao,
+  DadosLaudo,
+  GrupoResumo,
+  LinhaResumo,
+  TipoEquipamento,
+} from '../../core/models/laudo.model';
 import { PdfService } from '../../core/services/pdf.service';
 import { EnvioService } from '../../core/services/envio.service';
 
 type CanalEnvio = 'whatsapp' | 'email' | 'download';
-
-interface LinhaResumo {
-  rotulo: string;
-  valor: string;
-}
 
 @Component({
   selector: 'app-laudo-form',
@@ -37,6 +38,14 @@ export class LaudoForm {
     () => this.equipamentos.find((e) => e.tipo === this.tipo()) ?? this.equipamentos[0],
   );
 
+  /** lista achatada dos campos de medição do equipamento atual (seções ou lista única) */
+  readonly camposMedicao = computed<CampoMedicao[]>(() => {
+    const def = this.definicao();
+    return def.secoes ? def.secoes.flatMap((s) => s.campos) : (def.campos ?? []);
+  });
+
+  readonly camposIdentificacaoExtra = computed(() => this.definicao().camposIdentificacao ?? []);
+
   // --- formulários ---
   readonly identForm = this.fb.nonNullable.group({
     cliente: '',
@@ -50,6 +59,15 @@ export class LaudoForm {
     tag: '',
     serie: '',
     tensao: '',
+    // dados de placa do transformador
+    tensaoPrimaria: '',
+    tensaoSecundaria: '',
+    potencia: '',
+    peso: '',
+    volumeDeOleo: '',
+    relacaoTransformacao: '',
+    tipoDeTensao: 'Alta – Baixa',
+    tipoDeFechamento: 'Triângulo – Estrela',
   });
 
   readonly obs = this.fb.nonNullable.control('');
@@ -62,8 +80,11 @@ export class LaudoForm {
 
   private reconstruirMedicao(): void {
     const grupo: Record<string, unknown> = {};
-    for (const campo of this.definicao().campos) {
+    for (const campo of this.camposMedicao()) {
       grupo[campo.chave] = '';
+      if (campo.escalas?.length) {
+        grupo[`${campo.chave}__escala`] = campo.escalas[0];
+      }
     }
     this.medicaoForm = this.fb.nonNullable.group(grupo);
   }
@@ -108,10 +129,15 @@ export class LaudoForm {
     const ident = this.identForm.getRawValue();
     return {
       ...ident,
+      numero: this.numeroLaudo,
+      emitidoEm: new Date().toLocaleString('pt-BR'),
       tipo: this.tipo(),
       equipamento: this.definicao().nome,
       observacoes: this.obs.value,
       medicoes: this.medicaoForm.getRawValue() as Record<string, string>,
+      identificacao: this.blocoIdentificacao(),
+      equipamentoInfo: this.blocoEquipamento(),
+      medicoesGrupos: this.blocoMedicoes(),
     };
   }
 
@@ -158,29 +184,78 @@ export class LaudoForm {
     }
   });
 
-  // --- resumo (passo Revisão) ---
-  resumoIdentificacao(): LinhaResumo[] {
+  // --- resumo (passo Revisão + payload do PDF) ---
+  private static readonly TRACO = '—';
+
+  private valorComUnidade(valor: string | undefined, unidade?: string): string {
+    const v = (valor ?? '').trim();
+    if (!v) return LaudoForm.TRACO;
+    return unidade ? `${v} ${unidade}` : v;
+  }
+
+  blocoIdentificacao(): LinhaResumo[] {
     const f = this.identForm.getRawValue();
-    const traco = '—';
+    const t = LaudoForm.TRACO;
     return [
-      { rotulo: 'Cliente', valor: f.cliente || traco },
-      { rotulo: 'Subestação', valor: f.subestacao || traco },
-      { rotulo: 'Data do ensaio', valor: f.data || traco },
-      { rotulo: 'Responsável técnico', valor: f.responsavel || traco },
-      { rotulo: 'Equipamento', valor: this.definicao().nome },
-      { rotulo: 'Fabricante / modelo', valor: `${f.fabricante || traco}  /  ${f.modelo || traco}` },
-      { rotulo: 'TAG / nº de série', valor: `${f.tag || traco}  /  ${f.serie || traco}` },
+      { rotulo: 'Cliente', valor: f.cliente || t },
+      { rotulo: 'CNPJ', valor: f.cnpj || t },
+      { rotulo: 'Subestação', valor: f.subestacao || t },
+      { rotulo: 'Endereço / local', valor: f.local || t },
+      { rotulo: 'Data do ensaio', valor: f.data || t },
+      { rotulo: 'Responsável técnico', valor: f.responsavel || t },
     ];
   }
 
-  resumoMedicoes(): LinhaResumo[] {
+  blocoEquipamento(): LinhaResumo[] {
+    const f = this.identForm.getRawValue() as Record<string, string>;
+    const t = LaudoForm.TRACO;
+    const linhas: LinhaResumo[] = [
+      { rotulo: 'Equipamento', valor: this.definicao().nome },
+      { rotulo: 'Fabricante', valor: f['fabricante'] || t },
+      { rotulo: 'Modelo', valor: f['modelo'] || t },
+      { rotulo: 'TAG', valor: f['tag'] || t },
+      { rotulo: 'Nº de série', valor: f['serie'] || t },
+    ];
+
+    const extras = this.camposIdentificacaoExtra();
+    if (extras.length) {
+      for (const c of extras) {
+        linhas.push({ rotulo: c.rotulo, valor: this.valorComUnidade(f[c.chave], c.unidade) });
+      }
+    } else {
+      linhas.push({ rotulo: 'Tensão nominal', valor: this.valorComUnidade(f['tensao'], 'kV') });
+    }
+    return linhas;
+  }
+
+  blocoMedicoes(): GrupoResumo[] {
     const valores = this.medicaoForm.getRawValue() as Record<string, string>;
-    return this.definicao().campos.map((campo) => {
-      const v = valores[campo.chave];
+    const fmt = (campo: CampoMedicao): LinhaResumo => {
+      const unidade = campo.escalas ? valores[`${campo.chave}__escala`] : campo.unidade;
+      const v = (valores[campo.chave] ?? '').trim();
       return {
         rotulo: campo.rotulo,
-        valor: v ? `${v} ${campo.unidade}` : '—',
+        valor: v || LaudoForm.TRACO,
+        unidade: v ? unidade || '' : '',
       };
-    });
+    };
+
+    const def = this.definicao();
+    if (def.secoes) {
+      return def.secoes.map((s) => ({ titulo: s.titulo, linhas: s.campos.map(fmt) }));
+    }
+    return [{ titulo: 'Ensaios', linhas: (def.campos ?? []).map(fmt) }];
+  }
+
+  /** lista plana usada na coluna "Medições" da tela de revisão (valor + unidade juntos) */
+  resumoMedicoes(): LinhaResumo[] {
+    return this.blocoMedicoes()
+      .flatMap((g) => g.linhas)
+      .map((l) => ({ rotulo: l.rotulo, valor: l.unidade ? `${l.valor} ${l.unidade}` : l.valor }));
+  }
+
+  /** lista combinada usada na coluna "Identificação" da tela de revisão */
+  resumoIdentificacao(): LinhaResumo[] {
+    return [...this.blocoIdentificacao(), ...this.blocoEquipamento()];
   }
 }
